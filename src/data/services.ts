@@ -265,6 +265,7 @@ export const services: Service[] = [
     body: [
       "Atendimentos individualizados, considerando as necessidades e particularidades de cada criança e adolescente.",
       "Abordagens em Análise do Comportamento Aplicada (ABA) e Terapia Cognitivo-Comportamental (TCC), com orientação parental e suporte às famílias durante todo o processo.",
+      "Atendimento presencial na Clínica Clipe ou online.",
     ],
     bullets: {
       title: "Atendemos",

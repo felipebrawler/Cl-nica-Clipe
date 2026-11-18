@@ -1,11 +1,22 @@
 ---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import { faces } from "../lib/logo";
 import { initials, type Professional } from "../data/team";
+
 interface Props { p: Professional }
 const { p } = Astro.props;
+const photos = import.meta.glob<{ default: ImageMetadata }>("../assets/equipe/*.{png,jpg,jpeg,webp}", { eager: true });
+const photo = p.photo ? photos[`../assets/equipe/${p.photo}`]?.default : undefined;
 ---
-<div class="portrait">
+<div class:list={["portrait", { "has-photo": photo }]}>
   <svg class="faces-mini" viewBox="0 0 180 100" aria-hidden="true" set:html={faces()} />
-  <span class="ini" aria-hidden="true">{initials(p)}</span>
-  <span class="tag">Foto em breve</span>
+  {photo ? (
+    <Image class="photo" src={photo} alt={`Foto de ${p.short}`} widths={[240, 420, 640]} sizes="(max-width: 760px) 45vw, 280px" format="webp" />
+  ) : (
+    <>
+      <span class="ini" aria-hidden="true">{initials(p)}</span>
+      <span class="tag">Foto em breve</span>
+    </>
+  )}
 </div>

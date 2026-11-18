@@ -245,3 +245,7 @@ dialog[open] { animation: pop .6s var(--ease); }
 @keyframes word-on { from { opacity: 0; transform: translateY(10px) scale(.96); } 60% { opacity: 1; } }
 @keyframes tag-on { from { opacity: 0; transform: translateY(6px); } }
 @keyframes face-wink { 30% { transform: rotate(-14deg) translateY(-3px); } 60% { transform: rotate(8deg); } }
+
+/* Foto real (recorte redondo) dentro do card */
+.portrait.has-photo .photo { width: 80%; height: auto; aspect-ratio: 1; border-radius: 50%; margin-top: 12%; box-shadow: 0 0 0 6px #fff, 0 0 0 7px var(--gold), 0 20px 40px -20px rgba(94, 70, 54, .6); transition: transform .8s var(--ease); }
+.member:hover .portrait.has-photo .photo { transform: scale(1.04); }

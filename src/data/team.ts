@@ -17,7 +17,8 @@ export interface Professional {
   bio: string;
   focus: string[];
   note?: string;
-  photo?: string; // caminho em /public/equipe — TODO: fotos reais
+  photo?: string; // nome do arquivo em src/assets/equipe/ (ex.: "laura-maria.png")
+  instagram?: string;
 }
 
 export const team: Professional[] = [
@@ -82,13 +83,16 @@ export const team: Professional[] = [
     role: "Psicóloga Infantojuvenil",
     areas: ["Saúde mental"],
     registration: "CRP 18/8281",
-    bio: "Cuidado emocional para uma infância e adolescência mais saudáveis, com atendimentos individualizados e orientação parental durante todo o processo terapêutico.",
+    bio: "Ajuda crianças e adolescentes a compreender emoções e desenvolver habilidades. Atendimentos individualizados, presenciais na Clínica Clipe ou online, com orientação parental durante todo o processo terapêutico.",
     focus: [
       "Análise do Comportamento Aplicada (ABA)",
       "Terapia Cognitivo-Comportamental (TCC)",
       "TEA (nível 1 de suporte), TDAH, ansiedade",
       "Orientação parental",
+      "Atendimento presencial e online",
     ],
+    photo: "laura-maria.png",
+    instagram: "lauramaria.psi",
   },
   {
     id: "mariana-garcia",

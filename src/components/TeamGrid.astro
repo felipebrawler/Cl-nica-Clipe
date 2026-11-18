@@ -46,6 +46,7 @@ const areas = [...new Set(team.flatMap((p) => p.areas))] as Area[];
               {p.focus.map((f) => <li><Icon name="check" /> {f}</li>)}
             </ul>
             {p.note && <p class="note"><Icon name="calendar" /> {p.note}</p>}
+            {p.instagram && <p class="ig"><a href={`https://www.instagram.com/${p.instagram}/`} target="_blank" rel="noopener"><Icon name="instagram" /> @{p.instagram}</a></p>}
             <a class="btn" href={wa(`Olá! Gostaria de agendar um atendimento com ${p.short} na Clínica Clipe.`)} target="_blank" rel="noopener">
               <Icon name="whatsapp" /> Agendar com {p.short.split(" ").slice(0, 2).join(" ")}
             </a>
@@ -83,6 +84,8 @@ const areas = [...new Set(team.flatMap((p) => p.areas))] as Area[];
   .focus :global(.icon) { width: 18px; color: var(--green); flex: none; margin-top: 4px; }
   .note { display: flex; gap: 10px; align-items: center; background: #fff; padding: 12px 16px; border-radius: 14px; font-size: 14px; }
   .note :global(.icon) { width: 20px; color: var(--gold); flex: none; }
+  .ig a { display: inline-flex; gap: 8px; align-items: center; font-weight: 700; font-size: 14.5px; color: var(--lilac-deep); text-decoration: none; }
+  .ig :global(.icon) { width: 20px; }
   @media (max-width: 1000px) { .team-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   @media (max-width: 760px) { .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; } .dlg-grid { grid-template-columns: 1fr; } .dlg-grid :global(.portrait) { max-width: 220px; } }
 </style>
