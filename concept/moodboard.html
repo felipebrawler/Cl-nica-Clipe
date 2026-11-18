@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clínica Clipe — Moodboard e identidade web</title>
+<style>
+  @font-face { font-family: "Fraunces Variable"; src: url(fonts/fraunces-latin-wght-normal.woff2) format("woff2"); font-weight: 100 900; font-style: normal; }
+  @font-face { font-family: "Fraunces Variable"; src: url(fonts/fraunces-latin-wght-italic.woff2) format("woff2"); font-weight: 100 900; font-style: italic; }
+  @font-face { font-family: "Nunito Sans Variable"; src: url(fonts/nunito-sans-latin-wght-normal.woff2) format("woff2"); font-weight: 200 1000; }
+
+  :root {
+    --lilac: #9A8FC8;
+    --lilac-deep: #6E5FA6;
+    --lilac-soft: #ECE8F6;
+    --brown: #5E4636;
+    --gold: #C2A06A;
+    --wood: #B98A5E;
+    --cream: #F8F3EC;
+    --sand: #EFE6DA;
+    --green: #8DC63F;
+    --blue: #5FBFE3;
+    --pink: #F09BBE;
+    --serif: "Fraunces Variable", Georgia, serif;
+    --sans: "Nunito Sans Variable", system-ui, sans-serif;
+    --radius: 22px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--cream); color: var(--brown); font-family: var(--sans); font-size: 17px; line-height: 1.6; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+  section { padding: 72px 0; border-top: 1px solid #e6dccd; }
+  .eyebrow { font: 800 12px/1 var(--sans); letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin: 0 0 14px; }
+  h1, h2, h3 { font-family: var(--serif); color: var(--brown); font-weight: 600; margin: 0; letter-spacing: -.01em; }
+  h2 { font-size: 40px; line-height: 1.1; margin-bottom: 12px; }
+  h2 em, h1 em { font-style: italic; color: var(--lilac-deep); font-weight: 500; }
+  .lead { max-width: 640px; margin: 0 0 36px; color: #7a6656; }
+
+  /* slats texture */
+  .slats { background-image: repeating-linear-gradient(90deg, rgba(94,70,54,.07) 0 2px, transparent 2px 22px); }
+
+  /* cover */
+  .cover { padding: 64px 0 80px; text-align: center; position: relative; overflow: hidden; }
+  .cover .glow { position: absolute; inset: auto 50% 0 auto; width: 720px; height: 720px; transform: translate(50%, 30%); background: radial-gradient(closest-side, rgba(194,160,106,.28), transparent); pointer-events: none; }
+  .cover svg { width: min(520px, 90%); height: auto; position: relative; }
+  .cover h1 { font-size: 22px; font-family: var(--sans); font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-top: 28px; }
+  .cover p { font-family: var(--serif); font-style: italic; font-size: 30px; margin: 10px 0 0; color: var(--brown); }
+
+  /* logos grid */
+  .logos { display: grid; grid-template-columns: 1.3fr 1.3fr 1fr; gap: 22px; }
+  .tile { border-radius: var(--radius); padding: 28px; display: grid; place-items: center; min-height: 260px; position: relative; }
+  .tile small { position: absolute; left: 20px; bottom: 14px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; opacity: .7; }
+  .tile svg { width: 100%; height: auto; max-height: 230px; }
+  .t-cream { background: #fff; box-shadow: 0 1px 0 #e6dccd; }
+  .t-lilac { background: var(--lilac-deep); color: #fff; }
+  .t-wood { background: var(--wood); }
+  .t-wood svg { max-width: 230px; filter: drop-shadow(0 0 28px rgba(255,214,150,.7)); }
+
+  /* palette */
+  .palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  .sw { border-radius: var(--radius); overflow: hidden; background: #fff; box-shadow: 0 1px 0 #e6dccd; }
+  .sw .c { height: 120px; }
+  .sw .m { padding: 12px 16px 16px; font-size: 14px; line-height: 1.35; }
+  .sw b { display: block; font-size: 15px; }
+  .sw code { color: #9a8676; font-size: 13px; }
+  .accents { display: flex; gap: 12px; margin-top: 18px; align-items: center; font-size: 14px; }
+  .dot { width: 34px; height: 34px; border-radius: 50%; display: inline-block; }
+
+  /* type */
+  .type { display: grid; grid-template-columns: 1.4fr 1fr; gap: 28px; align-items: start; }
+  .card { background: #fff; border-radius: var(--radius); padding: 36px; box-shadow: 0 1px 0 #e6dccd; }
+  .specimen-serif { font-family: var(--serif); font-size: 64px; line-height: 1.02; font-weight: 600; }
+  .specimen-serif em { font-weight: 400; color: var(--lilac-deep); }
+  .label { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); font-weight: 800; }
+
+  /* components */
+  .btn { display: inline-flex; align-items: center; gap: 10px; border-radius: 999px; padding: 14px 24px; font: 800 16px/1 var(--sans); text-decoration: none; border: 0; }
+  .btn-primary { background: var(--lilac-deep); color: #fff; box-shadow: 0 8px 24px -10px rgba(110,95,166,.8); }
+  .btn-ghost { background: transparent; color: var(--brown); border: 1.5px solid #d9cbb8; }
+  .btn svg { width: 20px; height: 20px; }
+
+  .phases { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .phase { background: #fff; border-radius: var(--radius); padding: 26px 24px 24px; position: relative; overflow: hidden; box-shadow: 0 1px 0 #e6dccd; }
+  .phase::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: var(--accent); }
+  .phase .ico { width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, var(--accent) 16%, white); margin-bottom: 16px; }
+  .phase .ico svg { width: 30px; height: 30px; stroke: var(--brown); }
+  .phase h3 { font-size: 23px; margin-bottom: 6px; }
+  .phase p { font-size: 14.5px; margin: 0 0 14px; color: #7a6656; }
+  .phase a { font-weight: 800; font-size: 14px; color: var(--lilac-deep); text-decoration: none; }
+
+  /* hero mock */
+  .browser { border-radius: 18px; overflow: hidden; box-shadow: 0 30px 60px -30px rgba(94,70,54,.45); background: #fff; }
+  .bar { height: 34px; background: #efe8de; display: flex; gap: 7px; align-items: center; padding: 0 14px; }
+  .bar i { width: 11px; height: 11px; border-radius: 50%; background: #d9cbb8; }
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; background: var(--cream); }
+  .nav svg { height: 54px; width: auto; }
+  .nav ul { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; font-weight: 700; font-size: 15px; }
+  .hero { display: grid; grid-template-columns: 1fr 1.05fr; min-height: 470px; background: var(--cream); }
+  .hero .txt { padding: 56px 40px 56px 48px; display: flex; flex-direction: column; justify-content: center; }
+  .hero h1 { font-size: 52px; line-height: 1.04; }
+  .hero p { color: #7a6656; margin: 18px 0 28px; max-width: 440px; }
+  .hero .ph { background: url(referencias/recepcao.jpg) center/cover; border-top-left-radius: 160px; position: relative; }
+  .hero .badge { position: absolute; left: -36px; bottom: 36px; background: #fff; border-radius: 18px; padding: 14px 18px; box-shadow: 0 16px 40px -18px rgba(94,70,54,.6); font-size: 13px; line-height: 1.35; }
+  .hero .badge b { display: block; font-size: 15px; }
+  .trust { display: flex; gap: 34px; padding: 18px 48px; background: #fff; border-top: 1px solid #efe6da; font-size: 14px; font-weight: 700; }
+  .trust span { display: flex; gap: 8px; align-items: center; }
+  .trust svg { width: 20px; height: 20px; stroke: var(--gold); }
+
+  /* store + team */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .store { border-radius: var(--radius); overflow: hidden; display: grid; grid-template-rows: 1fr auto; min-height: 340px; background: #4a3628; }
+  .store .ph2 { background: url(referencias/vacinas-store.jpg) center 45%/cover; min-height: 200px; }
+  .store .in { color: #fff; padding: 22px 28px 26px; }
+  .store h3 { color: #fff; font-size: 30px; }
+  .team { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .doc { background: #fff; border-radius: 18px; overflow: hidden; box-shadow: 0 1px 0 #e6dccd; font-size: 13px; }
+  .doc .pic { aspect-ratio: 4/5; background: var(--lilac-soft) ; display: grid; place-items: center; color: var(--lilac); font-size: 12px; text-align: center; padding: 10px; }
+  .doc .pic svg { width: 46%; opacity: .55; }
+  .doc .m { padding: 10px 12px 14px; line-height: 1.3; }
+  .doc b { font-family: var(--serif); font-size: 15px; display: block; }
+  .doc .reg { color: #9a8676; font-size: 11.5px; }
+
+  .photos { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 16px; }
+  .photos div { border-radius: var(--radius); background-size: cover; background-position: center; min-height: 260px; }
+  .notes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .notes .card { padding: 26px; font-size: 15px; }
+  .notes h3 { font-size: 20px; margin-bottom: 8px; }
+  .yes { color: #4f7f1d; } .no { color: #b04a5a; }
+  footer { padding: 40px 0 60px; font-size: 13px; color: #9a8676; text-align: center; }
+</style>
+</head>
+<body>
+
+<header class="cover slats">
+  <div class="glow"></div>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" role="img" aria-label="Clipe — PEDIATRIA E ESPECIALIDADES">
+  
+  <g transform="translate(141 -2) scale(1.1)">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="5">
+    <!-- verde: cachinho + boca "o" -->
+    <g stroke="#8DC63F">
+      <circle cx="30" cy="62" r="27"/>
+      <path d="M30 35 C29 23 41 20 42 28 C43 34 35 35 35 29"/>
+      <circle cx="20" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="40" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="30" cy="75" r="5.5" stroke-width="4"/>
+    </g>
+    <!-- azul: topetinho + piscadinha -->
+    <g stroke="#5FBFE3">
+      <circle cx="90" cy="62" r="27"/>
+      <path d="M80 36 L82 25 L87 33 L91 21 L95 33 L101 26 L100 37"/>
+      <path d="M76 53 L83 57 L76 61" stroke-width="4"/>
+      <circle cx="100" cy="57" r="1.6" stroke-width="4.4"/>
+      <path d="M77 69 Q90 83 103 69"/>
+    </g>
+    <!-- rosa: lacinho + sorrisão -->
+    <g stroke="#F09BBE">
+      <circle cx="150" cy="62" r="27"/>
+      <path d="M152 33 L139 23 L140 40 Z M152 33 L166 22 L165 40 Z" fill="#F09BBE" stroke-width="3"/>
+      <circle cx="140" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="160" cy="57" r="1.6" stroke-width="4.4"/>
+      <path d="M136 67 L164 67 Q162 84 150 84 Q138 84 136 67 Z" stroke-width="4"/>
+    </g>
+  </g></g>
+  <g transform="translate(20 104) scale(.9)">
+  <defs>
+    <filter id="m0-p-rough" filterUnits="userSpaceOnUse" x="-40" y="-40" width="560" height="200">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="3.2"/>
+    </filter>
+  </defs>
+  <g filter="url(#m0-p-rough)">
+    <g fill="none" stroke="#9A8FC8" stroke-width="30" stroke-linejoin="miter" stroke-linecap="square"><path d="M100 34 Q78 10 52 18 Q22 28 22 62 Q22 100 54 108 Q82 114 102 94" transform="rotate(-4 62 62)"/><path d="M145 16 L145 106 L188 106" transform="rotate(3 166 62)"/><path d="M242 18 L242 104 M224 16 L260 16 M224 106 L260 106" transform="rotate(-3 242 62)"/><path d="M305 108 L305 18 L332 18 Q364 18 364 44 Q364 70 332 70 L310 70" transform="rotate(3 334 62)"/><path d="M455 18 L408 18 L408 104 L455 104 M408 61 L445 61" transform="rotate(-3 432 62)"/></g>
+    <g fill="none" stroke="#FFFFFF" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="70 9 30 7"><path d="M100 34 Q78 10 52 18 Q22 28 22 62 Q22 100 54 108 Q82 114 102 94" transform="rotate(-4 62 62) translate(-3.5 -3.5)"/><path d="M145 16 L145 106 L188 106" transform="rotate(3 166 62) translate(-3.5 -3.5)"/><path d="M242 18 L242 104 M224 16 L260 16 M224 106 L260 106" transform="rotate(-3 242 62) translate(-3.5 -3.5)"/><path d="M305 108 L305 18 L332 18 Q364 18 364 44 Q364 70 332 70 L310 70" transform="rotate(3 334 62) translate(-3.5 -3.5)"/><path d="M455 18 L408 18 L408 104 L455 104 M408 61 L445 61" transform="rotate(-3 432 62) translate(-3.5 -3.5)"/></g>
+  </g></g>
+  <line x1="110" y1="248" x2="370" y2="248" stroke="#5E4636" stroke-opacity=".45" stroke-width="2"/>
+  <text x="240" y="282" text-anchor="middle" fill="#5E4636"
+        font-family="'Nunito Sans Variable','Nunito Sans','Montserrat',Arial,sans-serif"
+        font-weight="700" font-size="21" letter-spacing="4.2">PEDIATRIA E ESPECIALIDADES</text>
+</svg>
+
+  <h1>Moodboard · Identidade web</h1>
+  <p>“Cuidando do hoje, para um futuro melhor.”</p>
+</header>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">01 · Logo redesenhado</p>
+    <h2>O logo de sempre, <em>em vetor</em></h2>
+    <p class="lead">Redesenho fiel ao estilo original: carinhas em traço (verde, azul, rosa), letras grossas com filete branco por dentro. Letras em lilás e assinatura em marrom, como na fachada e na Vacinas Store.</p>
+    <div class="logos">
+      <div class="tile t-cream"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" role="img" aria-label="Clipe — PEDIATRIA E ESPECIALIDADES">
+  
+  <g transform="translate(141 -2) scale(1.1)">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="5">
+    <!-- verde: cachinho + boca "o" -->
+    <g stroke="#8DC63F">
+      <circle cx="30" cy="62" r="27"/>
+      <path d="M30 35 C29 23 41 20 42 28 C43 34 35 35 35 29"/>
+      <circle cx="20" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="40" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="30" cy="75" r="5.5" stroke-width="4"/>
+    </g>
+    <!-- azul: topetinho + piscadinha -->
+    <g stroke="#5FBFE3">
+      <circle cx="90" cy="62" r="27"/>
+      <path d="M80 36 L82 25 L87 33 L91 21 L95 33 L101 26 L100 37"/>
+      <path d="M76 53 L83 57 L76 61" stroke-width="4"/>
+      <circle cx="100" cy="57" r="1.6" stroke-width="4.4"/>
+      <path d="M77 69 Q90 83 103 69"/>
+    </g>
+    <!-- rosa: lacinho + sorrisão -->
+    <g stroke="#F09BBE">
+      <circle cx="150" cy="62" r="27"/>
+      <path d="M152 33 L139 23 L140 40 Z M152 33 L166 22 L165 40 Z" fill="#F09BBE" stroke-width="3"/>
+      <circle cx="140" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="160" cy="57" r="1.6" stroke-width="4.4"/>
+      <path d="M136 67 L164 67 Q162 84 150 84 Q138 84 136 67 Z" stroke-width="4"/>
+    </g>
+  </g></g>
+  <g transform="translate(20 104) scale(.9)">
+  <defs>
+    <filter id="m1-p-rough" filterUnits="userSpaceOnUse" x="-40" y="-40" width="560" height="200">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="3.2"/>
+    </filter>
+  </defs>
+  <g filter="url(#m1-p-rough)">
+    <g fill="none" stroke="#9A8FC8" stroke-width="30" stroke-linejoin="miter" stroke-linecap="square"><path d="M100 34 Q78 10 52 18 Q22 28 22 62 Q22 100 54 108 Q82 114 102 94" transform="rotate(-4 62 62)"/><path d="M145 16 L145 106 L188 106" transform="rotate(3 166 62)"/><path d="M242 18 L242 104 M224 16 L260 16 M224 106 L260 106" transform="rotate(-3 242 62)"/><path d="M305 108 L305 18 L332 18 Q364 18 364 44 Q364 70 332 70 L310 70" transform="rotate(3 334 62)"/><path d="M455 18 L408 18 L408 104 L455 104 M408 61 L445 61" transform="rotate(-3 432 62)"/></g>
+    <g fill="none" stroke="#FFFFFF" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="70 9 30 7"><path d="M100 34 Q78 10 52 18 Q22 28 22 62 Q22 100 54 108 Q82 114 102 94" transform="rotate(-4 62 62) translate(-3.5 -3.5)"/><path d="M145 16 L145 106 L188 106" transform="rotate(3 166 62) translate(-3.5 -3.5)"/><path d="M242 18 L242 104 M224 16 L260 16 M224 106 L260 106" transform="rotate(-3 242 62) translate(-3.5 -3.5)"/><path d="M305 108 L305 18 L332 18 Q364 18 364 44 Q364 70 332 70 L310 70" transform="rotate(3 334 62) translate(-3.5 -3.5)"/><path d="M455 18 L408 18 L408 104 L455 104 M408 61 L445 61" transform="rotate(-3 432 62) translate(-3.5 -3.5)"/></g>
+  </g></g>
+  <line x1="110" y1="248" x2="370" y2="248" stroke="#5E4636" stroke-opacity=".45" stroke-width="2"/>
+  <text x="240" y="282" text-anchor="middle" fill="#5E4636"
+        font-family="'Nunito Sans Variable','Nunito Sans','Montserrat',Arial,sans-serif"
+        font-weight="700" font-size="21" letter-spacing="4.2">PEDIATRIA E ESPECIALIDADES</text>
+</svg>
+<small>Principal</small></div>
+      <div class="tile t-lilac"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" role="img" aria-label="Clipe — PEDIATRIA E ESPECIALIDADES">
+  
+  <g transform="translate(141 -2) scale(1.1)">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="5">
+    <!-- verde: cachinho + boca "o" -->
+    <g stroke="#FFFFFF">
+      <circle cx="30" cy="62" r="27"/>
+      <path d="M30 35 C29 23 41 20 42 28 C43 34 35 35 35 29"/>
+      <circle cx="20" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="40" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="30" cy="75" r="5.5" stroke-width="4"/>
+    </g>
+    <!-- azul: topetinho + piscadinha -->
+    <g stroke="#FFFFFF">
+      <circle cx="90" cy="62" r="27"/>
+      <path d="M80 36 L82 25 L87 33 L91 21 L95 33 L101 26 L100 37"/>
+      <path d="M76 53 L83 57 L76 61" stroke-width="4"/>
+      <circle cx="100" cy="57" r="1.6" stroke-width="4.4"/>
+      <path d="M77 69 Q90 83 103 69"/>
+    </g>
+    <!-- rosa: lacinho + sorrisão -->
+    <g stroke="#FFFFFF">
+      <circle cx="150" cy="62" r="27"/>
+      <path d="M152 33 L139 23 L140 40 Z M152 33 L166 22 L165 40 Z" fill="#FFFFFF" stroke-width="3"/>
+      <circle cx="140" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="160" cy="57" r="1.6" stroke-width="4.4"/>
+      <path d="M136 67 L164 67 Q162 84 150 84 Q138 84 136 67 Z" stroke-width="4"/>
+    </g>
+  </g></g>
+  <g transform="translate(20 104) scale(.9)">
+  <defs>
+    <filter id="m2-b-rough" filterUnits="userSpaceOnUse" x="-40" y="-40" width="560" height="200">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="3.2"/>
+    </filter>
+  </defs>
+  <g filter="url(#m2-b-rough)">
+    <g fill="none" stroke="#FFFFFF" stroke-width="30" stroke-linejoin="miter" stroke-linecap="square"><path d="M100 34 Q78 10 52 18 Q22 28 22 62 Q22 100 54 108 Q82 114 102 94" transform="rotate(-4 62 62)"/><path d="M145 16 L145 106 L188 106" transform="rotate(3 166 62)"/><path d="M242 18 L242 104 M224 16 L260 16 M224 106 L260 106" transform="rotate(-3 242 62)"/><path d="M305 108 L305 18 L332 18 Q364 18 364 44 Q364 70 332 70 L310 70" transform="rotate(3 334 62)"/><path d="M455 18 L408 18 L408 104 L455 104 M408 61 L445 61" transform="rotate(-3 432 62)"/></g>
+    <g fill="none" stroke="#9A8FC8" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="70 9 30 7"><path d="M100 34 Q78 10 52 18 Q22 28 22 62 Q22 100 54 108 Q82 114 102 94" transform="rotate(-4 62 62) translate(-3.5 -3.5)"/><path d="M145 16 L145 106 L188 106" transform="rotate(3 166 62) translate(-3.5 -3.5)"/><path d="M242 18 L242 104 M224 16 L260 16 M224 106 L260 106" transform="rotate(-3 242 62) translate(-3.5 -3.5)"/><path d="M305 108 L305 18 L332 18 Q364 18 364 44 Q364 70 332 70 L310 70" transform="rotate(3 334 62) translate(-3.5 -3.5)"/><path d="M455 18 L408 18 L408 104 L455 104 M408 61 L445 61" transform="rotate(-3 432 62) translate(-3.5 -3.5)"/></g>
+  </g></g>
+  <line x1="110" y1="248" x2="370" y2="248" stroke="#FFFFFF" stroke-opacity=".45" stroke-width="2"/>
+  <text x="240" y="282" text-anchor="middle" fill="#FFFFFF"
+        font-family="'Nunito Sans Variable','Nunito Sans','Montserrat',Arial,sans-serif"
+        font-weight="700" font-size="21" letter-spacing="4.2">PEDIATRIA E ESPECIALIDADES</text>
+</svg>
+<small>Negativo</small></div>
+      <div class="tile t-wood slats"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Clipe Vacinas Store">
+  
+  <circle cx="200" cy="200" r="192" fill="#F8F3EC" stroke="#C2A06A" stroke-width="8"/>
+  <g transform="translate(128 52) scale(.8)">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="5">
+    <!-- verde: cachinho + boca "o" -->
+    <g stroke="#8DC63F">
+      <circle cx="30" cy="62" r="27"/>
+      <path d="M30 35 C29 23 41 20 42 28 C43 34 35 35 35 29"/>
+      <circle cx="20" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="40" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="30" cy="75" r="5.5" stroke-width="4"/>
+    </g>
+    <!-- azul: topetinho + piscadinha -->
+    <g stroke="#5FBFE3">
+      <circle cx="90" cy="62" r="27"/>
+      <path d="M80 36 L82 25 L87 33 L91 21 L95 33 L101 26 L100 37"/>
+      <path d="M76 53 L83 57 L76 61" stroke-width="4"/>
+      <circle cx="100" cy="57" r="1.6" stroke-width="4.4"/>
+      <path d="M77 69 Q90 83 103 69"/>
+    </g>
+    <!-- rosa: lacinho + sorrisão -->
+    <g stroke="#F09BBE">
+      <circle cx="150" cy="62" r="27"/>
+      <path d="M152 33 L139 23 L140 40 Z M152 33 L166 22 L165 40 Z" fill="#F09BBE" stroke-width="3"/>
+      <circle cx="140" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="160" cy="57" r="1.6" stroke-width="4.4"/>
+      <path d="M136 67 L164 67 Q162 84 150 84 Q138 84 136 67 Z" stroke-width="4"/>
+    </g>
+  </g></g>
+  <g transform="translate(64 145) scale(.57)">
+  <defs>
+    <filter id="m3-vs-rough" filterUnits="userSpaceOnUse" x="-40" y="-40" width="560" height="200">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="3.2"/>
+    </filter>
+  </defs>
+  <g filter="url(#m3-vs-rough)">
+    <g fill="none" stroke="#9A8FC8" stroke-width="30" stroke-linejoin="miter" stroke-linecap="square"><path d="M100 34 Q78 10 52 18 Q22 28 22 62 Q22 100 54 108 Q82 114 102 94" transform="rotate(-4 62 62)"/><path d="M145 16 L145 106 L188 106" transform="rotate(3 166 62)"/><path d="M242 18 L242 104 M224 16 L260 16 M224 106 L260 106" transform="rotate(-3 242 62)"/><path d="M305 108 L305 18 L332 18 Q364 18 364 44 Q364 70 332 70 L310 70" transform="rotate(3 334 62)"/><path d="M455 18 L408 18 L408 104 L455 104 M408 61 L445 61" transform="rotate(-3 432 62)"/></g>
+    <g fill="none" stroke="#FFFFFF" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="70 9 30 7"><path d="M100 34 Q78 10 52 18 Q22 28 22 62 Q22 100 54 108 Q82 114 102 94" transform="rotate(-4 62 62) translate(-3.5 -3.5)"/><path d="M145 16 L145 106 L188 106" transform="rotate(3 166 62) translate(-3.5 -3.5)"/><path d="M242 18 L242 104 M224 16 L260 16 M224 106 L260 106" transform="rotate(-3 242 62) translate(-3.5 -3.5)"/><path d="M305 108 L305 18 L332 18 Q364 18 364 44 Q364 70 332 70 L310 70" transform="rotate(3 334 62) translate(-3.5 -3.5)"/><path d="M455 18 L408 18 L408 104 L455 104 M408 61 L445 61" transform="rotate(-3 432 62) translate(-3.5 -3.5)"/></g>
+  </g></g>
+  <line x1="110" y1="245" x2="290" y2="245" stroke="#5E4636" stroke-opacity=".45" stroke-width="2"/>
+  <text x="200" y="285" text-anchor="middle" fill="#5E4636" font-family="'Nunito Sans Variable','Nunito Sans',Arial,sans-serif" font-weight="700" font-size="30" letter-spacing="7">VACINAS</text>
+  <text x="200" y="318" text-anchor="middle" fill="#C2A06A" font-family="'Nunito Sans Variable','Nunito Sans',Arial,sans-serif" font-weight="700" font-size="19" letter-spacing="6">STORE</text>
+</svg>
+<small style="color:#fff">Vacinas Store</small></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">02 · Paleta</p>
+    <h2>As cores <em>da recepção</em></h2>
+    <p class="lead">Base quente e acolhedora (creme, madeira, dourado), lilás como cor da marca e as cores das carinhas só como pequenos acentos.</p>
+    <div class="palette">
+      <div class="sw"><div class="c" style="background:var(--lilac)"></div><div class="m"><b>Lilás Clipe</b><code>#9A8FC8</code><br>Marca, destaques</div></div>
+      <div class="sw"><div class="c" style="background:var(--lilac-deep)"></div><div class="m"><b>Lilás profundo</b><code>#6E5FA6</code><br>Botões, links</div></div>
+      <div class="sw"><div class="c" style="background:var(--brown)"></div><div class="m"><b>Cacau</b><code>#5E4636</code><br>Textos, títulos</div></div>
+      <div class="sw"><div class="c" style="background:var(--gold)"></div><div class="m"><b>Dourado</b><code>#C2A06A</code><br>Detalhes premium</div></div>
+      <div class="sw"><div class="c" style="background:var(--cream);border-bottom:1px solid #eee3d5"></div><div class="m"><b>Creme</b><code>#F8F3EC</code><br>Fundo</div></div>
+    </div>
+    <div class="accents"><span class="dot" style="background:var(--green)"></span><span class="dot" style="background:var(--blue)"></span><span class="dot" style="background:var(--pink)"></span><span class="dot slats" style="background-color:var(--wood)"></span>&nbsp; Acentos das carinhas + textura ripada da madeira</div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">03 · Tipografia</p>
+    <h2>Elegante, <em>mas com afeto</em></h2>
+    <div class="type">
+      <div class="card">
+        <div class="label">Títulos · Fraunces</div>
+        <div class="specimen-serif">Cuidado em <em>todas</em> as fases</div>
+      </div>
+      <div class="card">
+        <div class="label">Textos · Nunito Sans</div>
+        <p style="font-size:19px;margin:12px 0 10px">Da gestação à vida adulta, a Clipe acompanha cada etapa da sua família com carinho, segurança e uma equipe completa.</p>
+        <p style="font-size:14px;color:#9a8676;margin:0">Regular 400 · <b>Bold 800</b> · LETRA ESPAÇADA PARA RÓTULOS</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">04 · Elementos de interface</p>
+    <h2>Os <em>quatro pilares</em> do conceito</h2>
+    <p class="lead">Ícones em traço, na mesma espessura das carinhas do logo. Botão principal sempre leva ao WhatsApp com mensagem pronta.</p>
+    <div class="phases">
+      <div class="phase" style="--accent:var(--pink)">
+        <div class="ico"><svg viewBox="0 0 32 32" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 27s-10-6-10-13a5.5 5.5 0 0 1 10-3 5.5 5.5 0 0 1 10 3c0 7-10 13-10 13z"/></svg></div>
+        <h3>Gestação</h3><p>Consulta pediátrica no pré-natal e nutrição para gestantes.</p><a href="#">Ver serviços →</a>
+      </div>
+      <div class="phase" style="--accent:var(--blue)">
+        <div class="ico"><svg viewBox="0 0 32 32" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="17" r="10"/><path d="M16 7c0-3 4-3 3 0"/><circle cx="12.5" cy="16" r=".6"/><circle cx="19.5" cy="16" r=".6"/><path d="M12.5 20.5q3.5 3 7 0"/></svg></div>
+        <h3>Nascimento</h3><p>Sala de parto, testes do recém-nascido, fototerapia e frenotomia.</p><a href="#">Ver serviços →</a>
+      </div>
+      <div class="phase" style="--accent:var(--green)">
+        <div class="ico"><svg viewBox="0 0 32 32" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5v8a6 6 0 0 0 12 0V5"/><path d="M14 19v3a5 5 0 0 0 10 0v-2"/><circle cx="24" cy="17" r="3"/></svg></div>
+        <h3>Infância</h3><p>Pediatria, vacinas, psicologia, fisioterapia, nutrição e neuro.</p><a href="#">Ver serviços →</a>
+      </div>
+      <div class="phase" style="--accent:var(--lilac)">
+        <div class="ico"><svg viewBox="0 0 32 32" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="10" r="3.5"/><circle cx="22" cy="12" r="2.8"/><path d="M4 26c0-5 3-9 7-9s7 4 7 9M17 26c0-4 2-7 5-7s5 3 5 7"/></svg></div>
+        <h3>Toda a família</h3><p>Cirurgia geral, cardiologia, espirometria, soroterapia e laser.</p><a href="#">Ver serviços →</a>
+      </div>
+    </div>
+    <div style="display:flex;gap:14px;margin-top:28px">
+      <a class="btn btn-primary" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20l1.2-4.2A8.5 8.5 0 1 1 20 11.5z"/></svg>Agendar pelo WhatsApp</a>
+      <a class="btn btn-ghost" href="#">Conheça a equipe</a>
+    </div>
+  </div>
+</section>
+
+<section class="slats">
+  <div class="wrap">
+    <p class="eyebrow">05 · Prévia da página inicial</p>
+    <h2>Primeira impressão: <em>a recepção</em></h2>
+    <p class="lead">Rascunho de direção — não é o layout final.</p>
+    <div class="browser">
+      <div class="bar"><i></i><i></i><i></i></div>
+      <div class="nav"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" role="img" aria-label="Clipe — PEDIATRIA E ESPECIALIDADES">
+  
+  <g transform="translate(141 -2) scale(1.1)">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="5">
+    <!-- verde: cachinho + boca "o" -->
+    <g stroke="#8DC63F">
+      <circle cx="30" cy="62" r="27"/>
+      <path d="M30 35 C29 23 41 20 42 28 C43 34 35 35 35 29"/>
+      <circle cx="20" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="40" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="30" cy="75" r="5.5" stroke-width="4"/>
+    </g>
+    <!-- azul: topetinho + piscadinha -->
+    <g stroke="#5FBFE3">
+      <circle cx="90" cy="62" r="27"/>
+      <path d="M80 36 L82 25 L87 33 L91 21 L95 33 L101 26 L100 37"/>
+      <path d="M76 53 L83 57 L76 61" stroke-width="4"/>
+      <circle cx="100" cy="57" r="1.6" stroke-width="4.4"/>
+      <path d="M77 69 Q90 83 103 69"/>
+    </g>
+    <!-- rosa: lacinho + sorrisão -->
+    <g stroke="#F09BBE">
+      <circle cx="150" cy="62" r="27"/>
+      <path d="M152 33 L139 23 L140 40 Z M152 33 L166 22 L165 40 Z" fill="#F09BBE" stroke-width="3"/>
+      <circle cx="140" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="160" cy="57" r="1.6" stroke-width="4.4"/>
+      <path d="M136 67 L164 67 Q162 84 150 84 Q138 84 136 67 Z" stroke-width="4"/>
+    </g>
+  </g></g>
+  <g transform="translate(20 104) scale(.9)">
+  <defs>
+    <filter id="m4-p-rough" filterUnits="userSpaceOnUse" x="-40" y="-40" width="560" height="200">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="3.2"/>
+    </filter>
+  </defs>
+  <g filter="url(#m4-p-rough)">
+    <g fill="none" stroke="#9A8FC8" stroke-width="30" stroke-linejoin="miter" stroke-linecap="square"><path d="M100 34 Q78 10 52 18 Q22 28 22 62 Q22 100 54 108 Q82 114 102 94" transform="rotate(-4 62 62)"/><path d="M145 16 L145 106 L188 106" transform="rotate(3 166 62)"/><path d="M242 18 L242 104 M224 16 L260 16 M224 106 L260 106" transform="rotate(-3 242 62)"/><path d="M305 108 L305 18 L332 18 Q364 18 364 44 Q364 70 332 70 L310 70" transform="rotate(3 334 62)"/><path d="M455 18 L408 18 L408 104 L455 104 M408 61 L445 61" transform="rotate(-3 432 62)"/></g>
+    <g fill="none" stroke="#FFFFFF" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="70 9 30 7"><path d="M100 34 Q78 10 52 18 Q22 28 22 62 Q22 100 54 108 Q82 114 102 94" transform="rotate(-4 62 62) translate(-3.5 -3.5)"/><path d="M145 16 L145 106 L188 106" transform="rotate(3 166 62) translate(-3.5 -3.5)"/><path d="M242 18 L242 104 M224 16 L260 16 M224 106 L260 106" transform="rotate(-3 242 62) translate(-3.5 -3.5)"/><path d="M305 108 L305 18 L332 18 Q364 18 364 44 Q364 70 332 70 L310 70" transform="rotate(3 334 62) translate(-3.5 -3.5)"/><path d="M455 18 L408 18 L408 104 L455 104 M408 61 L445 61" transform="rotate(-3 432 62) translate(-3.5 -3.5)"/></g>
+  </g></g>
+  <line x1="110" y1="248" x2="370" y2="248" stroke="#5E4636" stroke-opacity=".45" stroke-width="2"/>
+  <text x="240" y="282" text-anchor="middle" fill="#5E4636"
+        font-family="'Nunito Sans Variable','Nunito Sans','Montserrat',Arial,sans-serif"
+        font-weight="700" font-size="21" letter-spacing="4.2">PEDIATRIA E ESPECIALIDADES</text>
+</svg>
+
+        <ul><li>Serviços</li><li>Vacinas Store</li><li>Equipe</li><li>A Clínica</li><li>Contato</li></ul>
+        <a class="btn btn-primary" style="padding:11px 18px;font-size:14px" href="#">Agendar</a>
+      </div>
+      <div class="hero">
+        <div class="txt">
+          <p class="eyebrow">Pediatria e Especialidades · Pontes e Lacerda</p>
+          <h1>Cuidando do hoje, <em>para um futuro melhor.</em></h1>
+          <p>Da gestação à vida adulta: pediatria, vacinas, testes do recém-nascido e especialidades para toda a família, em um só lugar.</p>
+          <div style="display:flex;gap:12px"><a class="btn btn-primary" href="#">Agendar pelo WhatsApp</a><a class="btn btn-ghost" href="#">Nossos serviços</a></div>
+        </div>
+        <div class="ph"><div class="badge"><b>Rua Goiás, 922 · Centro</b>Ao lado do Hospital São Lucas</div></div>
+      </div>
+      <div class="trust">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/></svg>Resp. técnica: Dra. Ana Cristina A. Torres Hermidorff · CRM-MT 6756 · RQE 1580</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 20l6-6m3-9l6 6-8 8-6-6z"/></svg>Vacinas para todas as idades</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">06 · Sub-marca e equipe</p>
+    <h2>Vacinas Store <em>e quem cuida</em></h2>
+    <div class="split">
+      <div class="store"><div class="ph2"></div><div class="in"><p class="eyebrow" style="color:#e9cf9f">Dentro da Clínica Clipe</p><h3>Vacinas Store</h3><p style="margin:6px 0 0">Vacinas para todas as idades, em um ambiente pensado para o conforto da família.</p></div></div>
+      <div class="team">
+        <div class="doc"><div class="pic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 100" role="img" aria-label="Clipe">
+  
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="5">
+    <!-- verde: cachinho + boca "o" -->
+    <g stroke="#8DC63F">
+      <circle cx="30" cy="62" r="27"/>
+      <path d="M30 35 C29 23 41 20 42 28 C43 34 35 35 35 29"/>
+      <circle cx="20" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="40" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="30" cy="75" r="5.5" stroke-width="4"/>
+    </g>
+    <!-- azul: topetinho + piscadinha -->
+    <g stroke="#5FBFE3">
+      <circle cx="90" cy="62" r="27"/>
+      <path d="M80 36 L82 25 L87 33 L91 21 L95 33 L101 26 L100 37"/>
+      <path d="M76 53 L83 57 L76 61" stroke-width="4"/>
+      <circle cx="100" cy="57" r="1.6" stroke-width="4.4"/>
+      <path d="M77 69 Q90 83 103 69"/>
+    </g>
+    <!-- rosa: lacinho + sorrisão -->
+    <g stroke="#F09BBE">
+      <circle cx="150" cy="62" r="27"/>
+      <path d="M152 33 L139 23 L140 40 Z M152 33 L166 22 L165 40 Z" fill="#F09BBE" stroke-width="3"/>
+      <circle cx="140" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="160" cy="57" r="1.6" stroke-width="4.4"/>
+      <path d="M136 67 L164 67 Q162 84 150 84 Q138 84 136 67 Z" stroke-width="4"/>
+    </g>
+  </g>
+</svg>
+Foto real</div><div class="m"><b>Dra. Ana Cristina</b>Pediatra<br><span class="reg">CRM-MT 6756 · RQE 1580</span></div></div>
+        <div class="doc"><div class="pic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 100" role="img" aria-label="Clipe">
+  
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="5">
+    <!-- verde: cachinho + boca "o" -->
+    <g stroke="#8DC63F">
+      <circle cx="30" cy="62" r="27"/>
+      <path d="M30 35 C29 23 41 20 42 28 C43 34 35 35 35 29"/>
+      <circle cx="20" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="40" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="30" cy="75" r="5.5" stroke-width="4"/>
+    </g>
+    <!-- azul: topetinho + piscadinha -->
+    <g stroke="#5FBFE3">
+      <circle cx="90" cy="62" r="27"/>
+      <path d="M80 36 L82 25 L87 33 L91 21 L95 33 L101 26 L100 37"/>
+      <path d="M76 53 L83 57 L76 61" stroke-width="4"/>
+      <circle cx="100" cy="57" r="1.6" stroke-width="4.4"/>
+      <path d="M77 69 Q90 83 103 69"/>
+    </g>
+    <!-- rosa: lacinho + sorrisão -->
+    <g stroke="#F09BBE">
+      <circle cx="150" cy="62" r="27"/>
+      <path d="M152 33 L139 23 L140 40 Z M152 33 L166 22 L165 40 Z" fill="#F09BBE" stroke-width="3"/>
+      <circle cx="140" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="160" cy="57" r="1.6" stroke-width="4.4"/>
+      <path d="M136 67 L164 67 Q162 84 150 84 Q138 84 136 67 Z" stroke-width="4"/>
+    </g>
+  </g>
+</svg>
+Foto real</div><div class="m"><b>Dr. Ualas Hermidorff</b>Cirurgião Geral<br><span class="reg">CRM-MT 7901 · RQE 4073</span></div></div>
+        <div class="doc"><div class="pic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 100" role="img" aria-label="Clipe">
+  
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="5">
+    <!-- verde: cachinho + boca "o" -->
+    <g stroke="#8DC63F">
+      <circle cx="30" cy="62" r="27"/>
+      <path d="M30 35 C29 23 41 20 42 28 C43 34 35 35 35 29"/>
+      <circle cx="20" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="40" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="30" cy="75" r="5.5" stroke-width="4"/>
+    </g>
+    <!-- azul: topetinho + piscadinha -->
+    <g stroke="#5FBFE3">
+      <circle cx="90" cy="62" r="27"/>
+      <path d="M80 36 L82 25 L87 33 L91 21 L95 33 L101 26 L100 37"/>
+      <path d="M76 53 L83 57 L76 61" stroke-width="4"/>
+      <circle cx="100" cy="57" r="1.6" stroke-width="4.4"/>
+      <path d="M77 69 Q90 83 103 69"/>
+    </g>
+    <!-- rosa: lacinho + sorrisão -->
+    <g stroke="#F09BBE">
+      <circle cx="150" cy="62" r="27"/>
+      <path d="M152 33 L139 23 L140 40 Z M152 33 L166 22 L165 40 Z" fill="#F09BBE" stroke-width="3"/>
+      <circle cx="140" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="160" cy="57" r="1.6" stroke-width="4.4"/>
+      <path d="M136 67 L164 67 Q162 84 150 84 Q138 84 136 67 Z" stroke-width="4"/>
+    </g>
+  </g>
+</svg>
+Foto real</div><div class="m"><b>Laura Maria</b>Psicóloga Infantojuvenil<br><span class="reg">CRP 18/8281</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">07 · Referências fotográficas</p>
+    <h2>Fotos reais, <em>luz quente</em></h2>
+    <p class="lead">O site usa as fotos do espaço e da equipe. Tons quentes, madeira, luz indireta — nada de banco de imagens se passando pela clínica.</p>
+    <div class="photos">
+      <div style="background-image:url(referencias/fachada.jpg)"></div>
+      <div style="background-image:url(referencias/recepcao.jpg)"></div>
+      <div style="background-image:url(referencias/vacinas-store.jpg)"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">08 · Direção</p>
+    <h2>O que <em>é</em> e o que <em>não é</em></h2>
+    <div class="notes">
+      <div class="card"><h3 class="yes">Sim</h3>Acolhedor e premium · creme, madeira, dourado e lilás · muito respiro · fotos reais · ícones em traço fino.</div>
+      <div class="card"><h3 class="no">Não</h3>Visual de panfleto · letras 3D coloridas · excesso de corações e brilhos · fundos saturados · fotos genéricas.</div>
+      <div class="card"><h3>Toque lúdico</h3>Vem das carinhas do logo: em ícones, divisores e pequenos detalhes — nunca dominando a página.</div>
+    </div>
+  </div>
+</section>
+
+<footer>Clínica Clipe · Rua Goiás, 922 · Centro · Pontes e Lacerda/MT · (65) 99936-4497 · @clinicaclipepediatria</footer>
+</body>
+</html>

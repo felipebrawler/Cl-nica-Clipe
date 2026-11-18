@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Clipe Vacinas Store">
+  <title>Clipe Vacinas Store</title>
+  <circle cx="200" cy="200" r="192" fill="#F8F3EC" stroke="#C2A06A" stroke-width="8"/>
+  <g transform="translate(128 52) scale(.8)">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="5">
+    <!-- verde: cachinho + boca "o" -->
+    <g stroke="#8DC63F">
+      <circle cx="30" cy="62" r="27"/>
+      <path d="M30 35 C29 23 41 20 42 28 C43 34 35 35 35 29"/>
+      <circle cx="20" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="40" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="30" cy="75" r="5.5" stroke-width="4"/>
+    </g>
+    <!-- azul: topetinho + piscadinha -->
+    <g stroke="#5FBFE3">
+      <circle cx="90" cy="62" r="27"/>
+      <path d="M80 36 L82 25 L87 33 L91 21 L95 33 L101 26 L100 37"/>
+      <path d="M76 53 L83 57 L76 61" stroke-width="4"/>
+      <circle cx="100" cy="57" r="1.6" stroke-width="4.4"/>
+      <path d="M77 69 Q90 83 103 69"/>
+    </g>
+    <!-- rosa: lacinho + sorrisão -->
+    <g stroke="#F09BBE">
+      <circle cx="150" cy="62" r="27"/>
+      <path d="M152 33 L139 23 L140 40 Z M152 33 L166 22 L165 40 Z" fill="#F09BBE" stroke-width="3"/>
+      <circle cx="140" cy="57" r="1.6" stroke-width="4.4"/>
+      <circle cx="160" cy="57" r="1.6" stroke-width="4.4"/>
+      <path d="M136 67 L164 67 Q162 84 150 84 Q138 84 136 67 Z" stroke-width="4"/>
+    </g>
+  </g></g>
+  <g transform="translate(64 145) scale(.57)">
+  <defs>
+    <filter id="vs-rough" filterUnits="userSpaceOnUse" x="-40" y="-40" width="560" height="200">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="3.2"/>
+    </filter>
+  </defs>
+  <g filter="url(#vs-rough)">
+    <g fill="none" stroke="#9A8FC8" stroke-width="30" stroke-linejoin="miter" stroke-linecap="square"><path d="M100 34 Q78 10 52 18 Q22 28 22 62 Q22 100 54 108 Q82 114 102 94" transform="rotate(-4 62 62)"/><path d="M145 16 L145 106 L188 106" transform="rotate(3 166 62)"/><path d="M242 18 L242 104 M224 16 L260 16 M224 106 L260 106" transform="rotate(-3 242 62)"/><path d="M305 108 L305 18 L332 18 Q364 18 364 44 Q364 70 332 70 L310 70" transform="rotate(3 334 62)"/><path d="M455 18 L408 18 L408 104 L455 104 M408 61 L445 61" transform="rotate(-3 432 62)"/></g>
+    <g fill="none" stroke="#FFFFFF" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="70 9 30 7"><path d="M100 34 Q78 10 52 18 Q22 28 22 62 Q22 100 54 108 Q82 114 102 94" transform="rotate(-4 62 62) translate(-3.5 -3.5)"/><path d="M145 16 L145 106 L188 106" transform="rotate(3 166 62) translate(-3.5 -3.5)"/><path d="M242 18 L242 104 M224 16 L260 16 M224 106 L260 106" transform="rotate(-3 242 62) translate(-3.5 -3.5)"/><path d="M305 108 L305 18 L332 18 Q364 18 364 44 Q364 70 332 70 L310 70" transform="rotate(3 334 62) translate(-3.5 -3.5)"/><path d="M455 18 L408 18 L408 104 L455 104 M408 61 L445 61" transform="rotate(-3 432 62) translate(-3.5 -3.5)"/></g>
+  </g></g>
+  <line x1="110" y1="245" x2="290" y2="245" stroke="#5E4636" stroke-opacity=".45" stroke-width="2"/>
+  <text x="200" y="285" text-anchor="middle" fill="#5E4636" font-family="'Nunito Sans Variable','Nunito Sans',Arial,sans-serif" font-weight="700" font-size="30" letter-spacing="7">VACINAS</text>
+  <text x="200" y="318" text-anchor="middle" fill="#C2A06A" font-family="'Nunito Sans Variable','Nunito Sans',Arial,sans-serif" font-weight="700" font-size="19" letter-spacing="6">STORE</text>
+</svg>
