@@ -1,0 +1,86 @@
+---
+import { Image } from "astro:assets";
+import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
+import recepcao from "../assets/recepcao.jpg";
+import { site, wa } from "../data/site";
+---
+<section class="hero glow-area slats">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow reveal">Pediatria e Especialidades · Pontes e Lacerda</p>
+      <h1 class="reveal" style="--d:1">
+        Cuidando do hoje, <em>para um futuro melhor.</em>
+      </h1>
+      <p class="lead reveal" style="--d:2">
+        Da gestação à vida adulta: pediatria, vacinas, testes do recém-nascido e especialidades
+        para toda a família, em um só lugar.
+      </p>
+      <div class="hero-actions reveal" style="--d:3">
+        <a class="btn" href={wa()} target="_blank" rel="noopener" data-magnetic><Icon name="whatsapp" /> Agendar pelo WhatsApp</a>
+        <a class="btn btn-ghost" href="#encontre">Encontre o cuidado certo</a>
+      </div>
+      <ul class="hero-trust reveal" style="--d:4">
+        <li><Icon name="shield" /> <span>Resp. técnica <b>{site.rt.crm}</b></span></li>
+        <li><Icon name="syringe" /> <span>Vacinas para <b>todas as idades</b></span></li>
+        <li><Icon name="pin" /> <span>Ao lado do <b>Hospital São Lucas</b></span></li>
+      </ul>
+    </div>
+
+    <div class="hero-visual">
+      <div class="arch reveal-img">
+        <Image src={recepcao} alt="Recepção da Clínica Clipe com painel de madeira e logo iluminado" widths={[480, 760, 1100]} sizes="(max-width: 900px) 92vw, 560px" loading="eager" />
+      </div>
+      <div class="sign" aria-hidden="true">
+        <div class="sign-light"></div>
+        <Logo animate tagline="ESPECIALIDADES E VACINAS" label="" />
+      </div>
+      <a class="hero-badge" href="/contato/">
+        <span class="dot"></span>
+        <span><b>{site.address.street} · {site.address.district}</b>{site.address.reference}</span>
+      </a>
+    </div>
+  </div>
+  <a class="scroll-cue" href="#fases" aria-label="Rolar para as fases do cuidado"><span></span></a>
+</section>
+
+<style>
+  .hero { padding: clamp(28px, 4vw, 56px) 0 clamp(70px, 9vw, 120px); overflow: hidden; }
+  .hero-grid { display: grid; grid-template-columns: 1.02fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
+  .hero-copy h1 { margin-top: 4px; }
+  .hero-copy .lead { margin: 24px 0 34px; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero-trust { list-style: none; padding: 0; margin: 40px 0 0; display: flex; flex-wrap: wrap; gap: 14px 28px; font-size: 14px; color: var(--brown-2); }
+  .hero-trust li { display: flex; align-items: center; gap: 10px; }
+  .hero-trust .icon { width: 22px; height: 22px; color: var(--gold); }
+  .hero-trust b { color: var(--brown); }
+
+  .hero-visual { position: relative; padding: 0 0 70px 40px; }
+  .arch { border-radius: 240px 240px var(--r-lg) var(--r-lg); overflow: hidden; box-shadow: var(--shadow-lg); aspect-ratio: 4 / 4.6; }
+  .arch :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 38% center; }
+  .sign {
+    position: absolute; left: -10px; bottom: 0; width: min(330px, 62%);
+    background: linear-gradient(180deg, #fffdf8, #f6eee2); border-radius: var(--r);
+    padding: 26px 28px 20px; box-shadow: 0 30px 60px -28px rgba(94, 70, 54, .7), inset 0 0 0 1px rgba(194,160,106,.35);
+    transform: rotate(-2deg);
+  }
+  .sign-light { position: absolute; inset: -30px; border-radius: 40px; background: radial-gradient(closest-side, rgba(255, 210, 140, .55), transparent); z-index: -1; opacity: 0; animation: light-on 1.6s var(--ease) 1.5s forwards; }
+  .sign :global(.logo) { width: 100%; height: auto; }
+  .hero-badge { position: absolute; right: 18px; top: 36px; display: flex; gap: 12px; align-items: center; background: rgba(255,255,255,.92); backdrop-filter: blur(8px); padding: 12px 18px; border-radius: 18px; box-shadow: var(--shadow-lg); font-size: 13px; line-height: 1.35; text-decoration: none; color: var(--brown-2); animation: float 7s ease-in-out infinite; }
+  .hero-badge b { display: block; color: var(--brown); font-size: 14.5px; }
+  .hero-badge .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 5px rgba(141,198,63,.2); flex: none; }
+
+  .scroll-cue { position: absolute; left: 50%; bottom: 26px; width: 26px; height: 42px; border-radius: 20px; border: 1.5px solid #cdb9a0; transform: translateX(-50%); }
+  .scroll-cue span { position: absolute; left: 50%; top: 8px; width: 4px; height: 8px; margin-left: -2px; border-radius: 2px; background: var(--gold); animation: cue 2s var(--ease) infinite; }
+
+  @keyframes light-on { to { opacity: 1; } }
+  @keyframes float { 50% { transform: translateY(-8px); } }
+  @keyframes cue { 0% { transform: translateY(0); opacity: 1; } 80% { transform: translateY(14px); opacity: 0; } 100% { opacity: 0; } }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-visual { padding: 0 0 60px 0; max-width: 520px; margin: 0 auto; width: 100%; }
+    .sign { left: 4%; }
+    .scroll-cue { display: none; }
+  }
+</style>

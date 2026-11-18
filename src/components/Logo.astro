@@ -1,0 +1,50 @@
+---
+import { faces, wordmark } from "../lib/logo";
+
+interface Props {
+  tagline?: string | false;
+  variant?: "color" | "white";
+  animate?: boolean;
+  class?: string;
+  label?: string;
+}
+const {
+  tagline = "PEDIATRIA E ESPECIALIDADES",
+  variant = "color",
+  animate = false,
+  class: cls = "",
+  label = "Clínica Clipe — Pediatria e Especialidades",
+} = Astro.props;
+
+const id = "lg" + Math.random().toString(36).slice(2, 8);
+const white = variant === "white";
+const faceColors = white ? { green: "#fff", blue: "#fff", pink: "#fff" } : undefined;
+const word = white ? "#fff" : "#9A8FC8";
+const inline = white ? "#9A8FC8" : "#fff";
+const tagColor = white ? "#fff" : "#5E4636";
+const h = tagline ? 300 : 236;
+---
+<svg
+  class:list={["logo", cls, { "logo-animate": animate }]}
+  viewBox={`0 0 480 ${h}`}
+  role="img"
+  aria-label={label}
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <g transform="translate(141 -2) scale(1.1)" set:html={faces(faceColors)} />
+  <g transform="translate(20 104) scale(.9)" set:html={wordmark({ fill: word, inline, id })} />
+  {tagline && (
+    <g class="logo-tag">
+      <line x1="110" y1="248" x2="370" y2="248" stroke={tagColor} stroke-opacity=".45" stroke-width="2" />
+      <text
+        x="240"
+        y="282"
+        text-anchor="middle"
+        fill={tagColor}
+        font-family="'Nunito Sans Variable', 'Nunito Sans', Arial, sans-serif"
+        font-weight="700"
+        font-size="21"
+        letter-spacing="4.2">{tagline}</text>
+    </g>
+  )}
+</svg>

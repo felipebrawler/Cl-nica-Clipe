@@ -1,0 +1,18 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import TeamGrid from "../components/TeamGrid.astro";
+import CtaBand from "../components/CtaBand.astro";
+---
+<Base title="Equipe" description="Conheça a equipe multiprofissional da Clínica Clipe: pediatria, cirurgia geral, cardiologia, neuropediatria, psicologia, fisioterapia, nutrição e enfermagem.">
+  <PageHero
+    eyebrow="Equipe multiprofissional"
+    title="Quem cuida, <em>com muito amor e dedicação.</em>"
+    lead="Todas as especialidades que a sua família precisa, em um só lugar. Filtre por área e toque em um profissional para saber mais."
+    crumbs={[{ href: "/equipe/", label: "Equipe" }]}
+  />
+  <section class="section" style="padding-top:20px">
+    <div class="wrap"><TeamGrid /></div>
+  </section>
+  <CtaBand />
+</Base>

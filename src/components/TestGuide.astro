@@ -1,0 +1,131 @@
+---
+import Icon from "./Icon.astro";
+import { newbornTests, guideMarks } from "../data/newborn";
+import { wa } from "../data/site";
+
+interface Props { compact?: boolean }
+const { compact = false } = Astro.props;
+const MAX = 60;
+const pos = (d: number) => Math.sqrt(Math.min(d, MAX) / MAX) * 100;
+---
+<div class:list={["guide", { compact }]} data-guide data-max={MAX}>
+  <div class="guide-control">
+    <label for="baby-age" class="age-label">Meu bebê tem <output data-age-out>3 dias</output></label>
+    <div class="slider-wrap">
+      <input id="baby-age" type="range" min="0" max="100" step="1" value={pos(3)} data-age aria-describedby="age-help" />
+      <div class="marks" aria-hidden="true">
+        {guideMarks.map((m) => <span style={`left:${pos(m.day)}%`}>{m.label}</span>)}
+      </div>
+    </div>
+    <p id="age-help" class="sr-only">Arraste para escolher a idade do bebê em dias. A lista abaixo mostra quais testes estão no momento ideal.</p>
+  </div>
+
+  <div class="chart" role="list">
+    <div class="today" data-today aria-hidden="true"><span>Hoje</span></div>
+    {newbornTests.map((t) => (
+      <div class="row" role="listitem" data-test data-from={t.from} data-to={t.to}>
+        <div class="row-name">
+          <span class="row-ic"><Icon name={t.icon} /></span>
+          <span>
+            <a href={`/servicos/${t.slug}/`}><b>{t.name}</b></a>
+            <small>{t.when}</small>
+          </span>
+        </div>
+        <div class="row-track" aria-hidden="true">
+          <span class="win" style={`left:${pos(t.from)}%;width:${Math.max(3, pos(t.to + 1) - pos(t.from))}%`}></span>
+        </div>
+        <div class="row-status">
+          <span class="pill" data-pill>—</span>
+          <a class="mini-wa" href={wa(`Olá! Gostaria de agendar o ${t.name} na Clínica Clipe.`)} target="_blank" rel="noopener" aria-label={`Agendar ${t.name} pelo WhatsApp`}><Icon name="whatsapp" /></a>
+        </div>
+      </div>
+    ))}
+  </div>
+  <p class="guide-note"><Icon name="info" /> Orientação geral baseada nas recomendações de triagem neonatal. Cada bebê é único: a indicação é feita pelo pediatra.</p>
+</div>
+
+<style>
+  .guide { background: #fff; border-radius: var(--r-lg); padding: clamp(22px, 3.4vw, 44px); box-shadow: var(--shadow-lg); }
+  .age-label { display: block; font: 560 clamp(24px, 2.6vw, 32px)/1.2 var(--serif); margin-bottom: 18px; }
+  .age-label output { font-style: italic; color: var(--lilac-deep); }
+  .slider-wrap { position: relative; padding-bottom: 30px; margin: 0 150px 0 260px; }
+  input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 8px; border-radius: 999px; background: linear-gradient(90deg, var(--lilac) var(--p, 0%), var(--sand) var(--p, 0%)); outline-offset: 8px; cursor: pointer; }
+  input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 30px; height: 30px; border-radius: 50%; background: #fff; border: 3px solid var(--lilac-deep); box-shadow: 0 6px 16px -6px rgba(79,66,130,.7); transition: transform .3s var(--ease); }
+  input[type="range"]::-moz-range-thumb { width: 26px; height: 26px; border-radius: 50%; background: #fff; border: 3px solid var(--lilac-deep); }
+  input[type="range"]:active::-webkit-slider-thumb { transform: scale(1.15); }
+  .marks span { position: absolute; top: 20px; transform: translateX(-50%); font-size: 12px; color: var(--brown-3); white-space: nowrap; }
+  .marks span:first-child { transform: none; }
+  .marks span:last-child { transform: translateX(-100%); }
+
+  .chart { position: relative; margin-top: 18px; }
+  .today { position: absolute; top: -8px; bottom: -8px; left: calc(260px + (100% - 260px - 150px) * var(--t, 0) / 100); width: 2px; background: var(--lilac-deep); z-index: 2; transition: left .15s linear; pointer-events: none; }
+  .today span { position: absolute; top: -22px; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--lilac-deep); }
+  .row { display: grid; grid-template-columns: 260px 1fr 150px; align-items: center; gap: 0; padding: 12px 0; border-top: 1px solid #f0e8dd; }
+  .row-name { display: flex; align-items: center; gap: 12px; padding-right: 16px; line-height: 1.25; }
+  .row-name a { text-decoration: none; }
+  .row-name a:hover b { color: var(--lilac-deep); }
+  .row-name small { display: block; font-size: 12.5px; color: var(--brown-3); }
+  .row-ic { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--cream); flex: none; transition: all .4s var(--ease); }
+  .row-ic :global(.icon) { width: 22px; height: 22px; }
+  .row-track { position: relative; height: 34px; background: repeating-linear-gradient(90deg, transparent 0 calc(10% - 1px), #f2ebe1 calc(10% - 1px) 10%); border-radius: 10px; }
+  .win { position: absolute; top: 6px; bottom: 6px; border-radius: 999px; background: var(--sand); transition: background .4s, box-shadow .4s; }
+  .row-status { display: flex; justify-content: flex-end; align-items: center; gap: 8px; padding-left: 12px; }
+  .pill { font-size: 12px; font-weight: 800; padding: 6px 10px; border-radius: 999px; background: var(--cream); color: var(--brown-3); white-space: nowrap; transition: all .4s var(--ease); }
+  .mini-wa { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--lilac-soft); color: var(--lilac-ink); flex: none; transition: transform .3s var(--ease); }
+  .mini-wa:hover { transform: scale(1.1); }
+  .mini-wa :global(.icon) { width: 18px; height: 18px; }
+
+  .row.now .win { background: linear-gradient(90deg, var(--lilac), var(--lilac-deep)); box-shadow: 0 0 0 4px rgba(154,143,200,.25); }
+  .row.now .row-ic { background: var(--lilac-deep); color: #fff; }
+  .row.now .pill { background: var(--lilac-deep); color: #fff; }
+  .row.soon .win { background: color-mix(in srgb, var(--blue) 40%, #fff); }
+  .row.soon .pill { background: #e4f4fb; color: #2b7a99; }
+  .row.late .win { background: color-mix(in srgb, var(--gold) 45%, #fff); }
+  .row.late .pill { background: #f7ecd9; color: #8a6a35; }
+
+  .guide-note { display: flex; gap: 10px; margin: 22px 0 0; font-size: 13.5px; color: var(--brown-3); }
+  .guide-note :global(.icon) { width: 18px; flex: none; margin-top: 3px; }
+
+  @media (max-width: 820px) {
+    .slider-wrap { margin: 0 6px; }
+    .row { grid-template-columns: 1fr; grid-template-areas: "name" "track" "status"; gap: 10px; }
+    .row-status { justify-content: space-between; padding-left: 0; }
+    .marks span:nth-child(2), .marks span:nth-child(3) { display: none; }
+    .row-name { grid-area: name; }
+    .row-status { grid-area: status; }
+    .row-track { grid-area: track; height: 22px; }
+    .win { top: 5px; bottom: 5px; }
+    .today { display: none; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-guide]").forEach((g) => {
+    const max = Number(g.dataset.max);
+    const input = g.querySelector<HTMLInputElement>("[data-age]")!;
+    const out = g.querySelector<HTMLOutputElement>("[data-age-out]")!;
+    const today = g.querySelector<HTMLElement>("[data-today]")!;
+    const rows = [...g.querySelectorAll<HTMLElement>("[data-test]")];
+    const fmt = (d: number) =>
+      d === 0 ? "acabado de nascer" : d === 1 ? "1 dia" : d < 30 ? `${d} dias` : d < 60 ? `${Math.floor(d / 30)} mês e ${d % 30} dias`.replace(" e 0 dias", "") : "2 meses ou mais";
+
+    const update = () => {
+      const v = Number(input.value);
+      const day = Math.round(max * (v / 100) ** 2);
+      input.style.setProperty("--p", `${v}%`);
+      today.style.setProperty("--t", String(v));
+      out.textContent = fmt(day);
+      input.setAttribute("aria-valuetext", fmt(day));
+      rows.forEach((r) => {
+        const from = Number(r.dataset.from), to = Number(r.dataset.to);
+        const state = day < from ? "soon" : day <= to ? "now" : "late";
+        r.classList.remove("now", "soon", "late");
+        r.classList.add(state);
+        r.querySelector("[data-pill]")!.textContent =
+          state === "now" ? "Momento ideal" : state === "soon" ? `A partir do ${from}º dia` : "Ainda não fez? Agende";
+      });
+    };
+    input.addEventListener("input", update);
+    update();
+  });
+</script>

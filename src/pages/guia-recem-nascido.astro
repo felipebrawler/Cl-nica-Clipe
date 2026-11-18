@@ -1,0 +1,69 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import TestGuide from "../components/TestGuide.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+import { newbornTests } from "../data/newborn";
+import { serviceBySlug } from "../data/services";
+
+const extras = ["fototerapia", "frenotomia", "pediatra-na-sala-de-parto", "consulta-pediatrica-pre-natal"].map(serviceBySlug);
+---
+<Base title="Guia do recém-nascido — testes e quando fazer" description="Teste do Pezinho, da Orelhinha, do Olhinho, do Coraçãozinho, da Linguinha e da Bochechinha: veja quando fazer cada um. Todos na Clínica Clipe, em Pontes e Lacerda/MT." waMessage="Olá! Gostaria de agendar os testes do recém-nascido na Clínica Clipe.">
+  <PageHero
+    eyebrow="Guia do recém-nascido"
+    title="Os primeiros dias, *sem dúvidas.*"
+    lead="Arraste até a idade do seu bebê e veja quais testes estão no momento ideal. Todos são feitos aqui na Clipe — e você agenda cada um com um toque."
+    crumbs={[{ href: "/guia-recem-nascido/", label: "Guia do recém-nascido" }]}
+  />
+
+  <section class="section" style="padding-top:20px">
+    <div class="wrap">
+      <div class="reveal"><TestGuide /></div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow reveal">Os 6 testes</p>
+        <h2 class="reveal" style="--d:1">O que cada teste <em>avalia</em></h2>
+      </div>
+      <div class="grid g3">
+        {newbornTests.map((t, i) => (
+          <a class="svc card reveal" style={`--d:${i % 3};--accent:var(--blue)`} href={`/servicos/${t.slug}/`}>
+            <span class="icon-bubble"><Icon name={t.icon} /></span>
+            <h3>{t.name}</h3>
+            <p>{t.what}</p>
+            <span class="when"><Icon name="clock" /> {t.when}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow reveal">Também para o bebê</p>
+        <h2 class="reveal" style="--d:1">Do parto aos <em>primeiros cuidados</em></h2>
+      </div>
+      <div class="grid g4">
+        {extras.map((s, i) => (
+          <a class="svc card reveal" style={`--d:${i};--accent:var(--pink)`} href={`/servicos/${s.slug}/`}>
+            <span class="icon-bubble"><Icon name={s.icon} /></span>
+            <h3>{s.title}</h3>
+            <p>{s.short}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Agende os testes do *seu bebê*" message="Olá! Gostaria de agendar os testes do recém-nascido na Clínica Clipe." />
+</Base>
+
+<style>
+  .when { display: inline-flex; gap: 8px; align-items: center; font-size: 13.5px; font-weight: 700; color: var(--lilac-deep); }
+  .when :global(.icon) { width: 18px; }
+</style>

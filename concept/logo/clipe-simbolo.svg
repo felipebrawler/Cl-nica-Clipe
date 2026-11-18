@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 100" role="img" aria-label="Clipe">
   <title>Clipe</title>
-  <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="5">
+  <g class="faces" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="5">
     <!-- verde: cachinho + boca "o" -->
-    <g stroke="#8DC63F">
+    <g class="face face-1" stroke="#8DC63F">
       <circle cx="30" cy="62" r="27"/>
       <path d="M30 35 C29 23 41 20 42 28 C43 34 35 35 35 29"/>
       <circle cx="20" cy="57" r="1.6" stroke-width="4.4"/>
@@ -10,7 +10,7 @@
       <circle cx="30" cy="75" r="5.5" stroke-width="4"/>
     </g>
     <!-- azul: topetinho + piscadinha -->
-    <g stroke="#5FBFE3">
+    <g class="face face-2" stroke="#5FBFE3">
       <circle cx="90" cy="62" r="27"/>
       <path d="M80 36 L82 25 L87 33 L91 21 L95 33 L101 26 L100 37"/>
       <path d="M76 53 L83 57 L76 61" stroke-width="4"/>
@@ -18,7 +18,7 @@
       <path d="M77 69 Q90 83 103 69"/>
     </g>
     <!-- rosa: lacinho + sorrisão -->
-    <g stroke="#F09BBE">
+    <g class="face face-3" stroke="#F09BBE">
       <circle cx="150" cy="62" r="27"/>
       <path d="M152 33 L139 23 L140 40 Z M152 33 L166 22 L165 40 Z" fill="#F09BBE" stroke-width="3"/>
       <circle cx="140" cy="57" r="1.6" stroke-width="4.4"/>

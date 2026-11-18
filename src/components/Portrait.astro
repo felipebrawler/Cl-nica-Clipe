@@ -1,0 +1,11 @@
+---
+import { faces } from "../lib/logo";
+import { initials, type Professional } from "../data/team";
+interface Props { p: Professional }
+const { p } = Astro.props;
+---
+<div class="portrait">
+  <svg class="faces-mini" viewBox="0 0 180 100" aria-hidden="true" set:html={faces()} />
+  <span class="ini" aria-hidden="true">{initials(p)}</span>
+  <span class="tag">Foto em breve</span>
+</div>

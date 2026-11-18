@@ -1,0 +1,64 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import VaccineCalendar from "../components/VaccineCalendar.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+import store from "../assets/vacinas-store.jpg";
+import { wa } from "../data/site";
+const msg = "Olá! Gostaria de informações sobre vacinas na Clipe Vacinas Store.";
+---
+<Base title="Clipe Vacinas Store — vacinas para todas as idades" description="Clipe Vacinas Store: vacinas para bebês, crianças, adolescentes, gestantes, adultos e 60+, dentro da Clínica Clipe em Pontes e Lacerda/MT. Calendário de vacinação interativo." waMessage={msg}>
+  <PageHero
+    eyebrow="Dentro da Clínica Clipe"
+    title="Clipe *Vacinas Store*"
+    lead="Vacinas para todas as idades, com aplicação segura e humanizada, em um espaço pensado para o conforto de toda a família."
+    crumbs={[{ href: "/vacinas-store/", label: "Vacinas Store" }]}
+  >
+    <div class="btns reveal" style="--d:4">
+      <a class="btn" href={wa(msg)} target="_blank" rel="noopener" data-magnetic><Icon name="whatsapp" /> Consultar vacinas</a>
+      <a class="btn btn-ghost" href="#calendario"><Icon name="calendar" /> Calendário por idade</a>
+    </div>
+  </PageHero>
+
+  <section class="section pillars-section">
+    <div class="wrap pillars">
+      <div class="store-photo reveal-img">
+        <Image src={store} alt="Painel circular iluminado da Clipe Vacinas Store" widths={[600, 1000]} sizes="(max-width: 900px) 92vw, 50vw" />
+      </div>
+      <div class="grid g2">
+        <div class="pill-card card reveal" style="--d:0"><span class="icon-bubble" style="--accent:var(--blue)"><Icon name="baby" /></span><h3>Bebês e crianças</h3><p>Calendário infantil completo e vacinas complementares.</p></div>
+        <div class="pill-card card reveal" style="--d:1"><span class="icon-bubble" style="--accent:var(--pink)"><Icon name="heart" /></span><h3>Gestantes</h3><p>Proteção para a mãe e para o bebê desde a gestação.</p></div>
+        <div class="pill-card card reveal" style="--d:2"><span class="icon-bubble" style="--accent:var(--green)"><Icon name="growth" /></span><h3>Adolescentes</h3><p>HPV, meningocócicas e reforços na idade certa.</p></div>
+        <div class="pill-card card reveal" style="--d:3"><span class="icon-bubble" style="--accent:var(--lilac)"><Icon name="family" /></span><h3>Adultos e 60+</h3><p>Gripe, reforços, herpes zóster e mais.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-sand" id="calendario">
+    <div class="wrap">
+      <div class="section-head split">
+        <div>
+          <p class="eyebrow reveal">Calendário interativo</p>
+          <h2 class="reveal" style="--d:1">Quais vacinas <em>em cada idade?</em></h2>
+        </div>
+        <p class="lead reveal" style="--d:2">Escolha a idade e veja as vacinas recomendadas. Depois é só consultar a disponibilidade com a nossa equipe.</p>
+      </div>
+      <VaccineCalendar />
+    </div>
+  </section>
+
+  <CtaBand title="Traga a *caderneta de vacinação*" text="Nossa equipe confere o histórico e orienta quais vacinas estão em dia e quais faltam." message="Olá! Gostaria de conferir a caderneta de vacinação na Clipe Vacinas Store." />
+</Base>
+
+<style>
+  .btns { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+  .pillars-section { padding-top: 30px; }
+  .pillars { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+  .store-photo { border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 1; }
+  .store-photo :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .pill-card { padding: 26px; display: grid; gap: 10px; }
+  .pill-card p { margin: 0; color: var(--brown-2); font-size: 15px; }
+  @media (max-width: 900px) { .pillars { grid-template-columns: 1fr; } }
+</style>

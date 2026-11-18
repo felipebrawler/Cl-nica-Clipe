@@ -1,0 +1,13 @@
+---
+import Icon from "./Icon.astro";
+import { serviceHref, phases, type Service } from "../data/services";
+interface Props { s: Service; d?: number }
+const { s, d = 0 } = Astro.props;
+const accent = phases.find((p) => p.id === s.phase)!.accent;
+---
+<a class="svc card reveal" href={serviceHref(s)} style={`--accent:${accent};--d:${d}`}>
+  <span class="icon-bubble"><Icon name={s.icon} /></span>
+  <h3>{s.title}</h3>
+  <p>{s.short}</p>
+  <span class="link-arrow">Saiba mais <Icon name="arrow" /></span>
+</a>

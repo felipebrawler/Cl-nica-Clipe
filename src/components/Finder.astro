@@ -1,0 +1,176 @@
+---
+import Icon from "./Icon.astro";
+import { finder } from "../data/finder";
+import { services, serviceHref } from "../data/services";
+import { byId } from "../data/team";
+import { wa } from "../data/site";
+import { icons } from "../lib/icons";
+
+const svcData = Object.fromEntries(
+  services.map((s) => [
+    s.slug,
+    {
+      title: s.title,
+      short: s.short,
+      href: serviceHref(s),
+      wa: wa(s.message),
+      icon: icons[s.icon],
+      pros: s.pros.map((id) => {
+        const p = byId(id);
+        return { name: p.short, role: p.role };
+      }),
+    },
+  ])
+);
+const data = { finder, svc: svcData, arrow: icons.arrow, whats: icons.whatsapp };
+---
+<section class="section bg-dark slats glow-area finder-section" id="encontre">
+  <div class="wrap">
+    <div class="finder" data-finder>
+      <div class="finder-intro">
+        <p class="eyebrow reveal">Encontre o cuidado certo</p>
+        <h2 class="reveal" style="--d:1">Em dois toques, <em>a gente te orienta.</em></h2>
+        <p class="lead reveal" style="--d:2">Conte para quem é o atendimento e o que você precisa. Mostramos o serviço, quem atende e já deixamos a mensagem pronta no WhatsApp.</p>
+        <ol class="steps" aria-hidden="true">
+          <li data-step-dot="1" class="on"><span>1</span> Para quem?</li>
+          <li data-step-dot="2"><span>2</span> O que precisa?</li>
+          <li data-step-dot="3"><span>3</span> Seu cuidado</li>
+        </ol>
+      </div>
+
+      <div class="finder-box" aria-live="polite">
+        <div class="step" data-step="1">
+          <p class="q">Para quem é o atendimento?</p>
+          <div class="who-grid">
+            {finder.map((w) => (
+              <button type="button" class="who" data-who={w.id}>
+                <span class="who-ic"><Icon name={w.icon} /></span>
+                <span><b>{w.label}</b><small>{w.hint}</small></span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div class="step" data-step="2" hidden>
+          <button type="button" class="back" data-back="1"><Icon name="left" /> Voltar</button>
+          <p class="q">O que você precisa?</p>
+          <div class="needs" data-needs></div>
+        </div>
+
+        <div class="step" data-step="3" hidden>
+          <button type="button" class="back" data-back="2"><Icon name="left" /> Voltar</button>
+          <p class="q">Este é o cuidado indicado:</p>
+          <div class="results" data-results></div>
+          <p class="fine">A orientação é um ponto de partida. A indicação final é sempre feita pela nossa equipe.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="application/json" id="finder-data" set:html={JSON.stringify(data)} />
+</section>
+
+<style>
+  .finder-section { overflow: hidden; }
+  .finder-section::before { background: radial-gradient(600px circle at var(--gx, 20%) var(--gy, 30%), rgba(214, 178, 118, .22), transparent 65%) !important; }
+  .finder { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(32px, 6vw, 90px); align-items: center; }
+  .steps { list-style: none; padding: 0; margin: 34px 0 0; display: grid; gap: 14px; }
+  .steps li { display: flex; gap: 14px; align-items: center; color: #b9a58c; font-weight: 700; transition: color .4s; }
+  .steps span { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; border: 1.5px solid #6d5546; font-size: 14px; transition: all .4s var(--ease); }
+  .steps li.on { color: #fff; }
+  .steps li.on span { background: var(--gold); border-color: var(--gold); color: var(--wood-dark); }
+
+  .finder-box { background: var(--cream); color: var(--brown); border-radius: var(--r-lg); padding: clamp(24px, 3.4vw, 44px); box-shadow: 0 40px 80px -40px rgba(0,0,0,.6); min-height: 460px; position: relative; }
+  .step { animation: step-in .7s var(--ease); }
+  @keyframes step-in { from { opacity: 0; transform: translateX(24px); } }
+  .q { font: 560 26px/1.2 var(--serif); margin: 0 0 22px; }
+  .who-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .who { display: flex; gap: 14px; align-items: center; text-align: left; padding: 18px; border-radius: 18px; border: 0; background: #fff; box-shadow: var(--shadow); cursor: pointer; transition: transform .5s var(--ease), box-shadow .5s var(--ease); }
+  .who:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .who b { display: block; font-size: 16px; }
+  .who small { color: var(--brown-3); font-size: 13.5px; }
+  .who-ic { width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; background: var(--lilac-soft); color: var(--lilac-ink); flex: none; }
+  .who-ic :global(.icon) { width: 26px; height: 26px; }
+  .back { display: inline-flex; align-items: center; gap: 4px; border: 0; background: none; color: var(--brown-3); font-weight: 700; cursor: pointer; padding: 0; margin-bottom: 14px; }
+  .back :global(.icon) { width: 18px; }
+  .needs { display: flex; flex-wrap: wrap; gap: 10px; }
+  .needs :global(button) { border: 0; cursor: pointer; padding: 13px 18px; border-radius: 999px; background: #fff; box-shadow: var(--shadow); font-weight: 700; font-size: 15px; transition: all .4s var(--ease); animation: step-in .6s var(--ease) both; }
+  .needs :global(button:hover) { background: var(--lilac-deep); color: #fff; transform: translateY(-2px); }
+  .results { display: grid; gap: 14px; }
+  .results :global(.res) { background: #fff; border-radius: 20px; padding: 20px; box-shadow: var(--shadow); display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; animation: step-in .6s var(--ease) both; }
+  .results :global(.res-ic) { grid-row: span 3; width: 52px; height: 52px; border-radius: 16px; background: var(--lilac-soft); display: grid; place-items: center; }
+  .results :global(.res-ic svg) { width: 28px; height: 28px; }
+  .results :global(.res h3) { font-size: 21px; color: var(--brown); }
+  .results :global(.res p) { margin: 0; color: var(--brown-2); font-size: 15px; }
+  .results :global(.res .who-attends) { font-size: 13.5px; color: var(--brown-3); }
+  .results :global(.res .acts) { grid-column: 2; display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+  .fine { font-size: 13px; color: var(--brown-3); margin: 16px 0 0; }
+  @media (max-width: 900px) { .finder { grid-template-columns: 1fr; } .steps { display: none; } }
+  @media (max-width: 520px) { .who-grid { grid-template-columns: 1fr; } .results :global(.res) { grid-template-columns: 1fr; } .results :global(.res-ic) { grid-row: auto; } .results :global(.res .acts) { grid-column: 1; } }
+</style>
+
+<script>
+  type Svc = { title: string; short: string; href: string; wa: string; icon: string; pros: { name: string; role: string }[] };
+  type Data = {
+    finder: { id: string; label: string; needs: { label: string; services: string[] }[] }[];
+    svc: Record<string, Svc>;
+    arrow: string;
+    whats: string;
+  };
+  const root = document.querySelector<HTMLElement>("[data-finder]");
+  const data: Data = JSON.parse(document.getElementById("finder-data")!.textContent!);
+  if (root) {
+    const steps = [...root.querySelectorAll<HTMLElement>("[data-step]")];
+    const dots = [...root.querySelectorAll<HTMLElement>("[data-step-dot]")];
+    const needsBox = root.querySelector<HTMLElement>("[data-needs]")!;
+    const resultsBox = root.querySelector<HTMLElement>("[data-results]")!;
+    let who = data.finder[0];
+
+    const svg = (inner: string) =>
+      `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${inner}</svg>`;
+    const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
+
+    const go = (n: number) => {
+      steps.forEach((s) => (s.hidden = s.dataset.step !== String(n)));
+      dots.forEach((d) => d.classList.toggle("on", Number(d.dataset.stepDot) <= n));
+      const first = steps[n - 1].querySelector<HTMLElement>("button:not(.back), a");
+      first?.focus({ preventScroll: true });
+    };
+
+    root.querySelectorAll<HTMLButtonElement>("[data-who]").forEach((b) =>
+      b.addEventListener("click", () => {
+        who = data.finder.find((w) => w.id === b.dataset.who)!;
+        needsBox.innerHTML = who.needs
+          .map((n, i) => `<button type="button" data-need="${i}" style="animation-delay:${i * 50}ms">${esc(n.label)}</button>`)
+          .join("");
+        go(2);
+      })
+    );
+
+    needsBox.addEventListener("click", (e) => {
+      const b = (e.target as HTMLElement).closest<HTMLButtonElement>("[data-need]");
+      if (!b) return;
+      const need = who.needs[Number(b.dataset.need)];
+      resultsBox.innerHTML = need.services
+        .map((slug, i) => {
+          const s = data.svc[slug];
+          const pros = s.pros.length ? s.pros.map((p) => `${esc(p.name)} · ${esc(p.role)}`).join("<br>") : "Equipe Clínica Clipe";
+          return `<article class="res" style="animation-delay:${i * 90}ms">
+            <span class="res-ic">${svg(s.icon)}</span>
+            <h3>${esc(s.title)}</h3>
+            <p>${esc(s.short)}</p>
+            <p class="who-attends">${pros}</p>
+            <div class="acts">
+              <a class="btn btn-sm" href="${s.wa}" target="_blank" rel="noopener">${svg(data.whats)} Agendar</a>
+              <a class="btn btn-sm btn-ghost" href="${s.href}">Saiba mais</a>
+            </div>
+          </article>`;
+        })
+        .join("");
+      go(3);
+    });
+
+    root.querySelectorAll<HTMLButtonElement>("[data-back]").forEach((b) =>
+      b.addEventListener("click", () => go(Number(b.dataset.back)))
+    );
+  }
+</script>

@@ -1,0 +1,20 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import { site } from "../data/site";
+---
+<Base title="Privacidade">
+  <PageHero eyebrow="Privacidade" title="Aviso de privacidade" crumbs={[{ href: "/privacidade/", label: "Privacidade" }]} />
+  <section class="section" style="padding-top:10px">
+    <div class="wrap text">
+      <p>Este site é informativo. Ele não possui formulários de cadastro e não armazena dados pessoais dos visitantes.</p>
+      <p>Ao clicar em “Agendar” ou “Enviar pelo WhatsApp”, você é direcionado ao aplicativo WhatsApp com uma mensagem pré-preenchida. As informações que você escolher enviar são tratadas pela recepção da {site.name} apenas para o agendamento e o atendimento, conforme a Lei Geral de Proteção de Dados (Lei nº 13.709/2018).</p>
+      <p>O mapa da página de contato é fornecido pelo Google Maps, que pode coletar dados de navegação conforme a política de privacidade do Google.</p>
+      <p>As informações de saúde deste site têm caráter educativo e não substituem a consulta com um profissional. Responsável técnica: {site.rt.name} · {site.rt.crm} · {site.rt.rqe}.</p>
+      <p>Dúvidas: fale com a gente pelo WhatsApp {site.phoneDisplay}.</p>
+    </div>
+  </section>
+</Base>
+<style>
+  .text { max-width: 760px; font-size: 17.5px; color: var(--brown-2); }
+</style>

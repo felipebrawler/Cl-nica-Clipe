@@ -1,0 +1,99 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import Hero from "../components/Hero.astro";
+import Journey from "../components/Journey.astro";
+import Finder from "../components/Finder.astro";
+import TestGuide from "../components/TestGuide.astro";
+import TeamGrid from "../components/TeamGrid.astro";
+import Tour from "../components/Tour.astro";
+import Location from "../components/Location.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+import store from "../assets/vacinas-store.jpg";
+import { wa } from "../data/site";
+---
+<Base>
+  <Hero />
+  <Journey />
+  <Finder />
+
+  <section class="section" id="recem-nascido">
+    <div class="wrap">
+      <div class="section-head split">
+        <div>
+          <p class="eyebrow reveal">Guia do recém-nascido</p>
+          <h2 class="reveal" style="--d:1">Qual teste fazer, <em>e quando?</em></h2>
+        </div>
+        <p class="lead reveal" style="--d:2">Arraste para a idade do seu bebê e veja quais testes estão no momento ideal. Todos são feitos aqui na Clipe.</p>
+      </div>
+      <div class="reveal" style="--d:1"><TestGuide /></div>
+      <p class="more reveal"><a class="link-arrow" href="/guia-recem-nascido/">Ver o guia completo do recém-nascido <Icon name="arrow" /></a></p>
+    </div>
+  </section>
+
+  <section class="section bg-sand store-section">
+    <div class="wrap store-grid">
+      <div class="store-img reveal-img">
+        <Image src={store} alt="Painel circular iluminado da Clipe Vacinas Store sobre ripado de madeira" widths={[480, 800, 1200]} sizes="(max-width: 900px) 92vw, 600px" />
+      </div>
+      <div>
+        <p class="eyebrow reveal">Dentro da Clínica Clipe</p>
+        <h2 class="reveal" style="--d:1">Clipe <em>Vacinas Store</em></h2>
+        <p class="lead reveal" style="--d:2">Vacinas para todas as idades — do bebê ao avô — em um espaço pensado para o conforto da família, com aplicação segura e humanizada.</p>
+        <ul class="ticks reveal" style="--d:3">
+          <li><Icon name="check" /> Calendário infantil completo e vacinas complementares</li>
+          <li><Icon name="check" /> Vacinas para gestantes, adultos e 60+</li>
+          <li><Icon name="check" /> Calendário interativo por idade</li>
+        </ul>
+        <div class="row-btns reveal" style="--d:4">
+          <a class="btn" href="/vacinas-store/"><Icon name="calendar" /> Ver calendário de vacinas</a>
+          <a class="btn btn-ghost" href={wa("Olá! Gostaria de informações sobre vacinas na Clipe Vacinas Store.")} target="_blank" rel="noopener">Falar com a Vacinas Store</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head split">
+        <div>
+          <p class="eyebrow reveal">Quem cuida</p>
+          <h2 class="reveal" style="--d:1">Uma equipe completa, <em>com muito carinho.</em></h2>
+        </div>
+        <a class="link-arrow reveal" href="/equipe/">Conheça toda a equipe <Icon name="arrow" /></a>
+      </div>
+      <TeamGrid filters={false} />
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="wrap">
+      <div class="section-head split">
+        <div>
+          <p class="eyebrow reveal">Tour pela clínica</p>
+          <h2 class="reveal" style="--d:1">Um espaço feito <em>para acolher.</em></h2>
+        </div>
+        <p class="lead reveal" style="--d:2">Toque nas fotos para ver em tela cheia e deslizar pelos ambientes.</p>
+      </div>
+      <Tour />
+    </div>
+  </section>
+
+  <Location />
+  <CtaBand title="Vamos cuidar da *sua família*?" />
+</Base>
+
+<style>
+  .more { margin-top: 26px; text-align: right; }
+  .store-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+  .store-img { border-radius: 50%; overflow: hidden; aspect-ratio: 1; box-shadow: 0 0 0 10px #fff, 0 0 0 11px var(--gold), var(--shadow-lg); max-width: 560px; }
+  .store-img :global(img) { width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); object-position: 50% 48%; }
+  .js .store-img.reveal-img { clip-path: circle(30% at 50% 50%); }
+  .js .store-img.reveal-img.in { clip-path: circle(50% at 50% 50%); }
+  .ticks { list-style: none; padding: 0; margin: 24px 0 32px; display: grid; gap: 10px; }
+  .ticks li { display: flex; gap: 12px; align-items: center; font-weight: 600; }
+  .ticks :global(.icon) { width: 22px; color: var(--green); }
+  .row-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  @media (max-width: 900px) { .store-grid { grid-template-columns: 1fr; } }
+</style>

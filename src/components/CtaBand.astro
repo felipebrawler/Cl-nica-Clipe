@@ -1,0 +1,31 @@
+---
+import Icon from "./Icon.astro";
+import { faces } from "../lib/logo";
+import { wa } from "../data/site";
+interface Props { title?: string; text?: string; message?: string }
+const {
+  title = "Vamos cuidar da sua família?",
+  text = "Fale com a nossa recepção pelo WhatsApp. Respondemos com carinho e ajudamos a encontrar o melhor horário.",
+  message,
+} = Astro.props;
+---
+<section class="cta-band">
+  <div class="wrap">
+    <div class="cta glow-area reveal" data-spot>
+      <svg class="cta-faces" viewBox="0 0 180 100" aria-hidden="true" set:html={faces()} />
+      <h2 set:html={title.replace(/\*(.+?)\*/g, "<em>$1</em>")} />
+      <p class="lead">{text}</p>
+      <a class="btn btn-gold" href={wa(message)} target="_blank" rel="noopener" data-magnetic><Icon name="whatsapp" /> Agendar pelo WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-band { padding: 0 0 clamp(72px, 9vw, 120px); }
+  .cta { position: relative; overflow: hidden; text-align: center; padding: clamp(48px, 7vw, 90px) 28px; border-radius: var(--r-lg); background: var(--lilac-deep); color: #fff; background-image: repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 2px, transparent 2px 24px); }
+  .cta::before { background: radial-gradient(420px circle at var(--gx, 50%) var(--gy, 0%), rgba(255, 220, 160, .35), transparent 65%) !important; }
+  .cta h2 { color: #fff; max-width: 760px; margin: 0 auto; }
+  .cta h2 :global(em) { color: var(--gold-soft); }
+  .cta .lead { color: #e6e1f5; margin: 18px auto 30px; }
+  .cta-faces { width: 120px; margin: 0 auto 22px; filter: brightness(1.15); }
+</style>

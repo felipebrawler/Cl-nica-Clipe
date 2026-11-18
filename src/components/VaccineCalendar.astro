@@ -1,0 +1,107 @@
+---
+import Icon from "./Icon.astro";
+import { vaccineCalendar } from "../data/vaccines";
+import { wa } from "../data/site";
+const first = vaccineCalendar.find((a) => a.id === "2m")!;
+---
+<div class="vc" data-vc>
+  <div class="vc-tabs" role="tablist" aria-label="Escolha a idade">
+    {vaccineCalendar.map((a) => (
+      <button
+        type="button"
+        role="tab"
+        id={`vt-${a.id}`}
+        aria-controls={`vp-${a.id}`}
+        aria-selected={a.id === first.id ? "true" : "false"}
+        tabindex={a.id === first.id ? 0 : -1}
+        data-tab={a.id}
+      >
+        <small>{a.group}</small>{a.label}
+      </button>
+    ))}
+  </div>
+
+  <div class="vc-panels">
+    {vaccineCalendar.map((a) => (
+      <div class="vc-panel" role="tabpanel" id={`vp-${a.id}`} aria-labelledby={`vt-${a.id}`} hidden={a.id !== first.id}>
+        <div class="vc-head">
+          <h3>{a.label}</h3>
+          <span class="count">{a.items.length} {a.items.length === 1 ? "vacina" : "vacinas"}</span>
+        </div>
+        <ul>
+          {a.items.map((v, i) => (
+            <li style={`--i:${i}`} class:list={{ extra: v.extra }}>
+              <span class="vi"><Icon name="syringe" /></span>
+              <span class="vn"><b>{v.name}</b>{v.dose && <small>{v.dose}</small>}</span>
+              <span class="tag">{v.extra ? "Complementar" : "Calendário básico"}</span>
+            </li>
+          ))}
+        </ul>
+        <a class="btn" href={wa(`Olá! Gostaria de saber sobre as vacinas de ${a.label.toLowerCase()} na Clipe Vacinas Store.`)} target="_blank" rel="noopener">
+          <Icon name="whatsapp" /> Consultar disponibilidade
+        </a>
+      </div>
+    ))}
+  </div>
+</div>
+<p class="vc-note"><Icon name="info" /> Resumo baseado no Programa Nacional de Imunizações e nas recomendações das sociedades médicas (SBP/SBIm). Vacinas “complementares” são as disponíveis na rede privada. Esquemas podem variar conforme histórico e indicação — confirme sempre com a nossa equipe.</p>
+
+<style>
+  .vc { display: grid; grid-template-columns: 260px 1fr; gap: 28px; align-items: start; }
+  .vc-tabs { display: grid; gap: 6px; position: sticky; top: calc(var(--header-h) + 24px); }
+  .vc-tabs button { text-align: left; border: 0; background: transparent; padding: 12px 18px; border-radius: 16px; cursor: pointer; font: 560 19px/1.15 var(--serif); color: var(--brown-2); transition: all .4s var(--ease); }
+  .vc-tabs small { display: block; font: 800 10.5px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--brown-3); margin-bottom: 4px; }
+  .vc-tabs button:hover { background: rgba(255,255,255,.7); }
+  .vc-tabs button[aria-selected="true"] { background: #fff; color: var(--lilac-deep); box-shadow: var(--shadow); transform: translateX(6px); }
+  .vc-tabs button[aria-selected="true"] small { color: var(--gold); }
+  .vc-panel { background: #fff; border-radius: var(--r-lg); padding: clamp(24px, 3.4vw, 44px); box-shadow: var(--shadow-lg); animation: vc-in .6s var(--ease); }
+  @keyframes vc-in { from { opacity: 0; transform: translateY(14px); } }
+  .vc-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px; }
+  .vc-head h3 { font-size: clamp(30px, 3.2vw, 42px); }
+  .count { font-weight: 800; color: var(--gold); font-size: 14px; }
+  .vc-panel ul { list-style: none; padding: 0; margin: 0 0 28px; }
+  .vc-panel li { display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; padding: 14px 0; border-top: 1px solid #f0e8dd; animation: vc-in .6s var(--ease) both; animation-delay: calc(var(--i) * 70ms); }
+  .vi { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--lilac-soft); color: var(--lilac-ink); }
+  .vi :global(.icon) { width: 20px; }
+  .extra .vi { background: #f7ecd9; color: #8a6a35; }
+  .vn b { display: block; font-size: 16px; line-height: 1.3; }
+  .vn small { color: var(--brown-3); font-size: 13.5px; }
+  .tag { font-size: 11.5px; font-weight: 800; padding: 5px 10px; border-radius: 999px; background: var(--cream); color: var(--brown-3); white-space: nowrap; }
+  .extra .tag { background: #f7ecd9; color: #8a6a35; }
+  .vc-note { display: flex; gap: 10px; font-size: 13.5px; color: var(--brown-3); margin: 26px 0 0; max-width: 900px; }
+  .vc-note :global(.icon) { width: 18px; flex: none; margin-top: 3px; }
+  @media (max-width: 860px) {
+    .vc { grid-template-columns: 1fr; }
+    .vc-tabs { position: static; display: flex; overflow-x: auto; gap: 8px; padding: 4px 2px 12px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+    .vc-tabs button { flex: none; scroll-snap-align: start; background: #fff; box-shadow: var(--shadow); font-size: 16px; }
+    .vc-tabs button[aria-selected="true"] { transform: none; background: var(--lilac-deep); color: #fff; }
+    .vc-tabs button[aria-selected="true"] small { color: var(--gold-soft); }
+    .vc-panel li { grid-template-columns: auto 1fr; }
+    .tag { grid-column: 2; justify-self: start; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-vc]").forEach((vc) => {
+    const tabs = [...vc.querySelectorAll<HTMLButtonElement>("[data-tab]")];
+    const select = (t: HTMLButtonElement, focus = false) => {
+      tabs.forEach((b) => {
+        const on = b === t;
+        b.setAttribute("aria-selected", String(on));
+        b.tabIndex = on ? 0 : -1;
+        const panel = document.getElementById(b.getAttribute("aria-controls")!)!;
+        panel.hidden = !on;
+      });
+      if (focus) t.focus();
+      t.scrollIntoView({ block: "nearest", inline: "nearest" });
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener("click", () => select(t));
+      t.addEventListener("keydown", (e) => {
+        const k = e.key;
+        if (["ArrowDown", "ArrowRight"].includes(k)) { e.preventDefault(); select(tabs[(i + 1) % tabs.length], true); }
+        if (["ArrowUp", "ArrowLeft"].includes(k)) { e.preventDefault(); select(tabs[(i - 1 + tabs.length) % tabs.length], true); }
+      });
+    });
+  });
+</script>

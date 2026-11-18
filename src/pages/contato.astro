@@ -1,0 +1,102 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import Location from "../components/Location.astro";
+import Icon from "../components/Icon.astro";
+import { finder } from "../data/finder";
+import { wa } from "../data/site";
+const topics = [
+  "Agendar uma consulta",
+  "Testes do recém-nascido",
+  "Vacinas",
+  "Exames e procedimentos",
+  "Outro assunto",
+];
+---
+<Base title="Contato" description="Agende pelo WhatsApp (65) 99936-4497. Clínica Clipe: Rua Goiás, 922, Centro, Pontes e Lacerda/MT, ao lado do Hospital São Lucas.">
+  <PageHero
+    eyebrow="Contato"
+    title="Fale com a gente <em>pelo WhatsApp.</em>"
+    lead="Monte sua mensagem abaixo e envie direto para a nossa recepção — sem cadastro, sem formulário."
+    crumbs={[{ href: "/contato/", label: "Contato" }]}
+  />
+
+  <section class="section" style="padding-top:20px">
+    <div class="wrap">
+      <form class="composer card reveal" data-composer>
+        <div class="field">
+          <span class="lbl">Sobre o que você quer falar?</span>
+          <div class="opts">
+            {topics.map((t, i) => (
+              <label><input type="radio" name="topic" value={t} checked={i === 0} /><span>{t}</span></label>
+            ))}
+          </div>
+        </div>
+        <div class="field">
+          <span class="lbl">Para quem é?</span>
+          <div class="opts">
+            {finder.map((w, i) => (
+              <label><input type="radio" name="who" value={w.label.replace("Para ", "").replace("mim, ", "")} checked={i === 1} /><span>{w.label}</span></label>
+            ))}
+          </div>
+        </div>
+        <div class="row2">
+          <label class="field"><span class="lbl">Seu nome</span><input type="text" name="name" autocomplete="given-name" placeholder="Como podemos te chamar?" /></label>
+          <label class="field"><span class="lbl">Melhor período</span>
+            <select name="period"><option value="">Tanto faz</option><option>Manhã</option><option>Tarde</option></select>
+          </label>
+        </div>
+        <div class="preview">
+          <span class="lbl">Sua mensagem</span>
+          <p data-preview></p>
+        </div>
+        <a class="btn" data-send href={wa()} target="_blank" rel="noopener"><Icon name="whatsapp" /> Enviar pelo WhatsApp</a>
+        <p class="fine">Nenhum dado é salvo neste site: a mensagem é aberta direto no seu WhatsApp.</p>
+      </form>
+    </div>
+  </section>
+
+  <Location />
+</Base>
+
+<style>
+  .composer { padding: clamp(24px, 4vw, 48px); display: grid; gap: 26px; max-width: 900px; }
+  .lbl { display: block; font-weight: 800; font-size: 14px; margin-bottom: 10px; }
+  .opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .opts input { position: absolute; opacity: 0; pointer-events: none; }
+  .opts span { display: inline-block; padding: 10px 16px; border-radius: 999px; background: var(--cream); cursor: pointer; font-weight: 700; font-size: 14.5px; transition: all .3s var(--ease); }
+  .opts input:checked + span { background: var(--lilac-deep); color: #fff; }
+  .opts input:focus-visible + span { outline: 3px solid var(--lilac); outline-offset: 2px; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .field input[type="text"], .field select { width: 100%; height: 52px; padding: 0 16px; border-radius: 14px; border: 1.5px solid var(--line); background: var(--cream); font: inherit; color: inherit; }
+  .field input[type="text"]:focus, .field select:focus { outline: none; border-color: var(--lilac); background: #fff; }
+  .preview { background: var(--cream); border-radius: 18px; padding: 18px 20px; position: relative; }
+  .preview p { margin: 0; font-family: var(--serif); font-size: 19px; line-height: 1.5; }
+  .btn { justify-self: start; }
+  .fine { font-size: 13px; color: var(--brown-3); margin: -10px 0 0; }
+  @media (max-width: 640px) { .row2 { grid-template-columns: 1fr; } .btn { justify-self: stretch; } }
+</style>
+
+<script>
+  const f = document.querySelector<HTMLFormElement>("[data-composer]");
+  if (f) {
+    const out = f.querySelector<HTMLElement>("[data-preview]")!;
+    const send = f.querySelector<HTMLAnchorElement>("[data-send]")!;
+    const base = send.href.split("?")[0];
+    const build = () => {
+      const d = new FormData(f);
+      const name = String(d.get("name") || "").trim();
+      const topic = String(d.get("topic"));
+      const who = String(d.get("who"));
+      const period = String(d.get("period") || "");
+      let m = `Olá! ${name ? `Meu nome é ${name}. ` : ""}Gostaria de falar sobre: ${topic.toLowerCase()} (${who}).`;
+      if (period) m += ` Prefiro atendimento no período da ${period.toLowerCase()}.`;
+      out.textContent = m;
+      send.href = `${base}?text=${encodeURIComponent(m)}`;
+    };
+    f.addEventListener("input", build);
+    f.addEventListener("change", build);
+    f.addEventListener("submit", (e) => e.preventDefault());
+    build();
+  }
+</script>

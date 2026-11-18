@@ -1,0 +1,145 @@
+---
+import "../styles/global.css";
+import Logo from "../components/Logo.astro";
+import Icon from "../components/Icon.astro";
+import { site, nav, wa, fullAddress, mapsUrl } from "../data/site";
+import { phases, servicesByPhase, serviceHref } from "../data/services";
+
+interface Props {
+  title?: string;
+  description?: string;
+  waMessage?: string;
+  introLogo?: boolean;
+}
+const { title, description = site.description, waMessage, introLogo = false } = Astro.props;
+const fullTitle = title ? `${title} | ${site.name}` : `${site.name} — ${site.tagline} em Pontes e Lacerda/MT`;
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "MedicalClinic",
+  name: site.name,
+  description: site.description,
+  telephone: "+" + site.phoneE164,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: site.address.street,
+    addressLocality: site.address.city,
+    addressRegion: site.address.state,
+    addressCountry: "BR",
+  },
+  medicalSpecialty: ["Pediatrics", "Surgery", "Cardiovascular", "Psychiatric"],
+  sameAs: [`https://www.instagram.com/${site.instagram}/`],
+};
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#F8F3EC" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="pt_BR" />
+    <script is:inline>document.documentElement.classList.add("js")</script>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+    <header class="site-header" data-header>
+      <div class="wrap bar">
+        <a href="/" class="brand" aria-label="Clínica Clipe — página inicial">
+          <Logo tagline={false} animate={introLogo} />
+        </a>
+        <nav class="main-nav" aria-label="Principal">
+          <ul>
+            {nav.map((n) => (
+              <li><a href={n.href} aria-current={isCurrent(n.href) ? "page" : undefined}>{n.label}</a></li>
+            ))}
+          </ul>
+        </nav>
+        <div class="header-cta">
+          <a class="btn btn-sm" href={wa(waMessage)} target="_blank" rel="noopener" data-magnetic>
+            <Icon name="whatsapp" /> Agendar
+          </a>
+          <button class="menu-btn" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu" data-menu-open>
+            <Icon name="menu" />
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="mobile-menu" id="menu" aria-hidden="true" data-menu>
+      <div class="top">
+        <a href="/" class="brand" aria-label="Página inicial"><Logo tagline={false} /></a>
+        <button class="menu-btn" style="display:grid" type="button" aria-label="Fechar menu" data-menu-close><Icon name="close" /></button>
+      </div>
+      <nav aria-label="Menu">
+        <a href="/">Início</a>
+        {nav.map((n) => <a href={n.href}>{n.label}</a>)}
+      </nav>
+      <a class="btn" href={wa(waMessage)} target="_blank" rel="noopener"><Icon name="whatsapp" /> Agendar pelo WhatsApp</a>
+    </div>
+
+    <main id="conteudo">
+      <slot />
+    </main>
+
+    <footer class="site-footer slats">
+      <div class="wrap">
+        <div class="footer-grid">
+          <div>
+            <Logo variant="white" />
+            <p style="margin-top:22px;max-width:300px;font-family:var(--serif);font-style:italic;font-size:20px;line-height:1.35;color:#fff">“{site.slogan}”</p>
+          </div>
+          <div>
+            <h4>Serviços</h4>
+            <ul>
+              {phases.map((p) => (
+                <li><a href={`/servicos/#${p.id}`}>{p.title}</a></li>
+              ))}
+              <li><a href="/vacinas-store/">Vacinas Store</a></li>
+              <li><a href="/guia-recem-nascido/">Guia do recém-nascido</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>A Clipe</h4>
+            <ul>
+              <li><a href="/equipe/">Equipe</a></li>
+              <li><a href="/a-clinica/">A Clínica</a></li>
+              <li><a href="/contato/">Contato</a></li>
+              <li><a href="/privacidade/">Privacidade</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Fale com a gente</h4>
+            <ul>
+              <li><a class="contact-line" href={wa()} target="_blank" rel="noopener"><Icon name="whatsapp" /> {site.phoneDisplay}</a></li>
+              <li><a class="contact-line" href={mapsUrl} target="_blank" rel="noopener"><Icon name="pin" /> <span>{fullAddress}<br /><small>{site.address.reference}</small></span></a></li>
+              <li><a class="contact-line" href={`https://www.instagram.com/${site.instagram}/`} target="_blank" rel="noopener"><Icon name="instagram" /> @{site.instagram}</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="rt">
+          <span>Responsável Técnica: {site.rt.name} · {site.rt.crm} · {site.rt.rqe}</span>
+          <span>© {new Date().getFullYear()} {site.name}</span>
+        </div>
+      </div>
+    </footer>
+
+    <a class="wa-float" href={wa(waMessage)} target="_blank" rel="noopener" aria-label="Agendar pelo WhatsApp">
+      <span class="label">Agende pelo WhatsApp</span>
+      <span class="bubble"><Icon name="whatsapp" /></span>
+    </a>
+
+    <script>
+      import "../scripts/ui";
+    </script>
+  </body>
+</html>

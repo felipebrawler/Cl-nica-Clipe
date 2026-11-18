@@ -1,0 +1,112 @@
+---
+import Icon from "./Icon.astro";
+import Portrait from "./Portrait.astro";
+import { team, type Area } from "../data/team";
+import { wa } from "../data/site";
+
+interface Props { filters?: boolean }
+const { filters = true } = Astro.props;
+const areas = [...new Set(team.flatMap((p) => p.areas))] as Area[];
+---
+<div class="team" data-team>
+  {filters && (
+    <div class="filters" role="group" aria-label="Filtrar por área">
+      <button type="button" class="f on" data-filter="all" aria-pressed="true">Todos</button>
+      {areas.map((a) => <button type="button" class="f" data-filter={a} aria-pressed="false">{a}</button>)}
+    </div>
+  )}
+
+  <div class="team-grid">
+    {team.map((p, i) => (
+      <button type="button" class="member reveal" style={`--d:${i % 4}`} data-areas={p.areas.join("|")} data-open={p.id} aria-haspopup="dialog">
+        <Portrait p={p} />
+        <span class="m-body">
+          <b>{p.short}</b>
+          <span class="role">{p.role}</span>
+          {p.registration && <span class="reg">{p.registration}</span>}
+        </span>
+        <span class="plus" aria-hidden="true"><Icon name="arrow" /></span>
+      </button>
+    ))}
+  </div>
+
+  {team.map((p) => (
+    <dialog id={`dlg-${p.id}`} aria-labelledby={`dlg-${p.id}-t`}>
+      <div class="dlg card">
+        <button class="dialog-close" type="button" data-close aria-label="Fechar"><Icon name="close" /></button>
+        <div class="dlg-grid">
+          <Portrait p={p} />
+          <div>
+            <p class="eyebrow">{p.areas.join(" · ")}</p>
+            <h3 id={`dlg-${p.id}-t`}>{p.name}</h3>
+            <p class="role">{p.role}</p>
+            {p.registration && <p class="reg">{p.registration}</p>}
+            <p class="bio">{p.bio}</p>
+            <ul class="focus">
+              {p.focus.map((f) => <li><Icon name="check" /> {f}</li>)}
+            </ul>
+            {p.note && <p class="note"><Icon name="calendar" /> {p.note}</p>}
+            <a class="btn" href={wa(`Olá! Gostaria de agendar um atendimento com ${p.short} na Clínica Clipe.`)} target="_blank" rel="noopener">
+              <Icon name="whatsapp" /> Agendar com {p.short.split(" ").slice(0, 2).join(" ")}
+            </a>
+          </div>
+        </div>
+      </div>
+    </dialog>
+  ))}
+</div>
+
+<style>
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 30px; }
+  .f { border: 0; cursor: pointer; padding: 10px 18px; border-radius: 999px; background: #fff; box-shadow: var(--shadow); font-weight: 700; font-size: 14.5px; transition: all .4s var(--ease); }
+  .f:hover { transform: translateY(-2px); }
+  .f.on { background: var(--brown); color: #fff; }
+  .team-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
+  .member { position: relative; border: 0; padding: 0; background: none; text-align: left; cursor: pointer; display: grid; gap: 14px; transition: opacity .5s var(--ease), transform .5s var(--ease); }
+  .member :global(.portrait) { transition: transform .8s var(--ease), box-shadow .8s var(--ease); }
+  .member:hover :global(.portrait) { transform: translateY(-6px) rotate(-1deg); box-shadow: var(--shadow-lg); }
+  .member.hide { display: none; }
+  .m-body { display: grid; gap: 2px; padding: 0 4px; }
+  .m-body b { font: 560 20px/1.2 var(--serif); }
+  .role { font-size: 14.5px; color: var(--brown-2); }
+  .reg { font-size: 12.5px; color: var(--brown-3); letter-spacing: .02em; }
+  .plus { position: absolute; top: 14px; right: 14px; width: 40px; height: 40px; border-radius: 50%; background: #fff; display: grid; place-items: center; color: var(--lilac-deep); box-shadow: var(--shadow); transform: scale(.8); opacity: 0; transition: all .5s var(--ease); }
+  .plus :global(.icon) { width: 18px; }
+  .member:hover .plus, .member:focus-visible .plus { transform: none; opacity: 1; }
+  .dlg { position: relative; padding: clamp(22px, 3vw, 40px); background: var(--cream); }
+  .dlg-grid { display: grid; grid-template-columns: 280px 1fr; gap: 34px; align-items: start; }
+  .dlg h3 { font-size: clamp(26px, 3vw, 34px); }
+  .dlg .role { margin: 6px 0 2px; font-weight: 700; }
+  .dlg .bio { margin: 16px 0; color: var(--brown-2); }
+  .focus { list-style: none; padding: 0; margin: 0 0 22px; display: grid; gap: 8px; }
+  .focus li { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; }
+  .focus :global(.icon) { width: 18px; color: var(--green); flex: none; margin-top: 4px; }
+  .note { display: flex; gap: 10px; align-items: center; background: #fff; padding: 12px 16px; border-radius: 14px; font-size: 14px; }
+  .note :global(.icon) { width: 20px; color: var(--gold); flex: none; }
+  @media (max-width: 1000px) { .team-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 760px) { .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; } .dlg-grid { grid-template-columns: 1fr; } .dlg-grid :global(.portrait) { max-width: 220px; } }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-team]").forEach((root) => {
+    const members = [...root.querySelectorAll<HTMLElement>("[data-areas]")];
+    root.querySelectorAll<HTMLButtonElement>("[data-filter]").forEach((b, _, all) =>
+      b.addEventListener("click", () => {
+        all.forEach((x) => { x.classList.toggle("on", x === b); x.setAttribute("aria-pressed", String(x === b)); });
+        const f = b.dataset.filter!;
+        members.forEach((m) => {
+          const show = f === "all" || m.dataset.areas!.split("|").includes(f);
+          m.classList.toggle("hide", !show);
+          if (show) { m.animate([{ opacity: 0, transform: "translateY(16px)" }, { opacity: 1, transform: "none" }], { duration: 500, easing: "cubic-bezier(.22,1,.36,1)" }); }
+        });
+      })
+    );
+    root.querySelectorAll<HTMLButtonElement>("[data-open]").forEach((b) =>
+      b.addEventListener("click", () => (document.getElementById(`dlg-${b.dataset.open}`) as HTMLDialogElement).showModal())
+    );
+    root.querySelectorAll("dialog").forEach((d) => {
+      d.querySelector("[data-close]")?.addEventListener("click", () => d.close());
+      d.addEventListener("click", (e) => { if (e.target === d) d.close(); });
+    });
+  });
+</script>

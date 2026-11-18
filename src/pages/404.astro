@@ -1,0 +1,21 @@
+---
+import Base from "../layouts/Base.astro";
+import Logo from "../components/Logo.astro";
+---
+<Base title="Página não encontrada">
+  <section class="section nf glow-area slats">
+    <div class="wrap center">
+      <Logo animate tagline={false} class="nf-logo" />
+      <h1>Ops! <em>Esta página se escondeu.</em></h1>
+      <p class="lead">Mas a gente te ajuda a encontrar o caminho.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a class="btn" href="/">Voltar ao início</a>
+        <a class="btn btn-ghost" href="/servicos/">Ver serviços</a>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .nf :global(.nf-logo) { width: 220px; margin: 0 auto 30px; }
+  .nf h1 { font-size: clamp(36px, 5vw, 60px); margin-bottom: 14px; }
+</style>

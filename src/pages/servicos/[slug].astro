@@ -1,0 +1,114 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
+import ServiceCard from "../../components/ServiceCard.astro";
+import Portrait from "../../components/Portrait.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import Icon from "../../components/Icon.astro";
+import { services, phases, servicesByPhase, type Service } from "../../data/services";
+import { byId } from "../../data/team";
+import { wa, site } from "../../data/site";
+
+export function getStaticPaths() {
+  return services.filter((s) => !s.link).map((s) => ({ params: { slug: s.slug }, props: { s } }));
+}
+const { s } = Astro.props as { s: Service };
+const phase = phases.find((p) => p.id === s.phase)!;
+const pros = s.pros.map(byId);
+const related = servicesByPhase(s.phase).filter((x) => x.slug !== s.slug).slice(0, 3);
+const isNewborn = s.slug.startsWith("teste-");
+---
+<Base title={`${s.title} em Pontes e Lacerda`} description={`${s.short} ${s.title} na Clínica Clipe, Pontes e Lacerda/MT.`} waMessage={s.message}>
+  <div style={`--accent:${phase.accent}`}>
+    <PageHero
+      eyebrow={phase.title}
+      title={s.title}
+      lead={s.short}
+      crumbs={[{ href: "/servicos/", label: "Serviços" }, { href: `/servicos/#${phase.id}`, label: phase.title }]}
+    >
+      <div class="hero-btns reveal" style="--d:4">
+        <a class="btn" href={wa(s.message)} target="_blank" rel="noopener" data-magnetic><Icon name="whatsapp" /> Agendar pelo WhatsApp</a>
+        {isNewborn && <a class="btn btn-ghost" href="/guia-recem-nascido/"><Icon name="calendar" /> Quando fazer cada teste</a>}
+      </div>
+      <span class="hero-icon" aria-hidden="true"><Icon name={s.icon} stroke={1.2} /></span>
+    </PageHero>
+
+    <section class="section detail">
+      <div class="wrap detail-grid">
+        <article class="body">
+          {s.body.map((p, i) => <p class:list={["reveal", { first: i === 0 }]} style={`--d:${i}`}>{p}</p>)}
+          {s.bullets && (
+            <div class="bullets card reveal">
+              <h2 class="h3">{s.bullets.title}</h2>
+              <ul>
+                {s.bullets.items.map((b) => <li><Icon name="check" /> {b}</li>)}
+              </ul>
+            </div>
+          )}
+        </article>
+
+        <aside class="side">
+          <div class="side-card card reveal">
+            <p class="eyebrow">Quem atende</p>
+            {pros.length ? pros.map((p) => (
+              <a class="pro" href="/equipe/">
+                <Portrait p={p} />
+                <span><b>{p.short}</b><small>{p.role}</small>{p.registration && <small class="reg">{p.registration}</small>}</span>
+              </a>
+            )) : <p class="muted">Equipe Clínica Clipe, sob responsabilidade técnica da {site.rt.name} ({site.rt.crm}).</p>}
+            <a class="btn" style="width:100%;margin-top:18px" href={wa(s.message)} target="_blank" rel="noopener"><Icon name="whatsapp" /> Agendar</a>
+            <p class="addr"><Icon name="pin" /> {site.address.street}, {site.address.district} · {site.address.reference}</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    {related.length > 0 && (
+      <section class="section bg-white">
+        <div class="wrap">
+          <div class="section-head split">
+            <div>
+              <p class="eyebrow reveal">Na mesma fase</p>
+              <h2 class="reveal" style="--d:1">Também em <em>{phase.title.toLowerCase()}</em></h2>
+            </div>
+            <a class="link-arrow reveal" href={`/servicos/#${phase.id}`}>Ver todos <Icon name="arrow" /></a>
+          </div>
+          <div class="grid g3">{related.map((r, j) => <ServiceCard s={r} d={j} />)}</div>
+        </div>
+      </section>
+    )}
+    <CtaBand title={`Agende: *${s.title}*`} message={s.message} />
+  </div>
+</Base>
+
+<style>
+  .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+  .hero-icon { position: absolute; right: max(28px, calc((100vw - var(--wrap)) / 2 + 28px)); top: 50%; translate: 0 -40%; width: clamp(140px, 22vw, 300px); height: clamp(140px, 22vw, 300px); border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, var(--accent) 20%, #fff); color: var(--brown); opacity: .9; animation: float 8s ease-in-out infinite; }
+  .hero-icon :global(.icon) { width: 46%; height: 46%; }
+  @keyframes float { 50% { transform: translateY(-10px); } }
+  :global(.page-hero h1), :global(.page-hero .lead) { max-width: min(760px, 62vw); }
+  .detail { padding-top: 40px; }
+  .detail-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: start; }
+  .body p { font-size: 18.5px; color: var(--brown-2); }
+  .body p.first { font: 400 clamp(22px, 2.2vw, 27px)/1.45 var(--serif); color: var(--brown); }
+  .bullets { padding: 30px; margin-top: 30px; }
+  .h3 { font-size: 24px; margin-bottom: 16px; }
+  .bullets ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .bullets li { display: flex; gap: 12px; align-items: flex-start; }
+  .bullets :global(.icon) { width: 20px; color: var(--green); flex: none; margin-top: 4px; }
+  .side-card { padding: 28px; position: sticky; top: calc(var(--header-h) + 20px); }
+  .pro { display: grid; grid-template-columns: 80px 1fr; gap: 16px; align-items: center; text-decoration: none; padding: 8px 0; }
+  .pro :global(.portrait) { border-radius: 16px; }
+  .pro :global(.portrait .ini) { font-size: 28px; }
+  .pro :global(.portrait .tag), .pro :global(.portrait .faces-mini) { display: none; }
+  .pro b { display: block; font-family: var(--serif); font-size: 19px; }
+  .pro small { display: block; color: var(--brown-2); font-size: 14px; }
+  .pro .reg { color: var(--brown-3); font-size: 12.5px; }
+  .addr { display: flex; gap: 8px; font-size: 13.5px; color: var(--brown-3); margin: 16px 0 0; }
+  .addr :global(.icon) { width: 18px; flex: none; color: var(--gold); }
+  @media (max-width: 900px) {
+    .detail-grid { grid-template-columns: 1fr; }
+    .hero-icon { display: none; }
+    :global(.page-hero h1), :global(.page-hero .lead) { max-width: none; }
+  }
+</style>

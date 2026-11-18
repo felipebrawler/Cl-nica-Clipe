@@ -1,0 +1,53 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import Tour from "../components/Tour.astro";
+import Location from "../components/Location.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+import { site } from "../data/site";
+
+const values = [
+  { icon: "heart", title: "Acolhimento", text: "Cada família é recebida com carinho, do primeiro contato ao fim do atendimento." },
+  { icon: "shield", title: "Segurança", text: `Responsabilidade técnica da ${site.rt.name}, ${site.rt.crm} · ${site.rt.rqe}.` },
+  { icon: "family", title: "Tudo em um só lugar", text: "Pediatria, vacinas, testes, especialidades e exames sem precisar rodar a cidade." },
+  { icon: "growth", title: "Em todas as fases", text: "Da gestação à vida adulta, acompanhamos a sua família enquanto ela cresce." },
+] as const;
+---
+<Base title="A Clínica" description="Conheça a Clínica Clipe: um espaço acolhedor no centro de Pontes e Lacerda/MT, ao lado do Hospital São Lucas.">
+  <PageHero
+    eyebrow="A Clínica Clipe"
+    title="Um espaço feito <em>para acolher.</em>"
+    lead="Madeira, luz quente e um time que gosta de gente. Faça um tour pelos nossos ambientes."
+    crumbs={[{ href: "/a-clinica/", label: "A Clínica" }]}
+  />
+  <section class="section" style="padding-top:20px">
+    <div class="wrap"><Tour /></div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="wrap">
+      <div class="section-head center">
+        <p class="eyebrow reveal">O que nos move</p>
+        <h2 class="reveal" style="--d:1">Cuidando do hoje, <em>para um futuro melhor.</em></h2>
+      </div>
+      <div class="grid g4">
+        {values.map((v, i) => (
+          <div class="value card reveal" style={`--d:${i}`}>
+            <span class="icon-bubble"><Icon name={v.icon} /></span>
+            <h3>{v.title}</h3>
+            <p>{v.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Location />
+  <CtaBand title="Venha nos *conhecer*" />
+</Base>
+
+<style>
+  .value { padding: 28px; display: grid; gap: 12px; align-content: start; }
+  .value p { margin: 0; color: var(--brown-2); font-size: 15.5px; }
+</style>

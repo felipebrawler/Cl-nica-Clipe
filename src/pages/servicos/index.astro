@@ -1,0 +1,49 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
+import ServiceCard from "../../components/ServiceCard.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import Icon from "../../components/Icon.astro";
+import { phases, servicesByPhase } from "../../data/services";
+---
+<Base title="Serviços" description="Pediatria, testes do recém-nascido, vacinas, psicologia, fisioterapia, nutrição, cirurgia geral, cardiologia e mais na Clínica Clipe, em Pontes e Lacerda/MT.">
+  <PageHero
+    eyebrow="Serviços"
+    title="Cuidado em *todas as fases*"
+    lead="Organizamos os nossos serviços pelas fases da vida da sua família. Escolha a fase ou role para conhecer tudo."
+    crumbs={[{ href: "/servicos/", label: "Serviços" }]}
+  >
+    <div class="phase-jump reveal" style="--d:4">
+      {phases.map((p) => (
+        <a href={`#${p.id}`} style={`--accent:${p.accent}`}><span class="icon-bubble"><Icon name={p.icon} /></span>{p.title}</a>
+      ))}
+    </div>
+  </PageHero>
+
+  {phases.map((p, i) => (
+    <section class:list={["section", { "bg-white": i % 2 === 1 }]} id={p.id} style={`--accent:${p.accent}`}>
+      <div class="wrap">
+        <div class="section-head split">
+          <div>
+            <p class="eyebrow reveal">0{i + 1} · {p.kicker}</p>
+            <h2 class="reveal" style="--d:1">{p.title}</h2>
+          </div>
+          <p class="lead reveal" style="--d:2">{p.text}</p>
+        </div>
+        <div class="grid g3">
+          {servicesByPhase(p.id).map((s, j) => <ServiceCard s={s} d={j % 3} />)}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <CtaBand title="Não encontrou o que procura? *Fale com a gente.*" />
+</Base>
+
+<style>
+  .phase-jump { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+  .phase-jump a { display: inline-flex; align-items: center; gap: 12px; padding: 8px 20px 8px 8px; background: #fff; border-radius: 999px; box-shadow: var(--shadow); text-decoration: none; font-weight: 800; transition: transform .5s var(--ease), box-shadow .5s var(--ease); }
+  .phase-jump a:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+  .phase-jump .icon-bubble { width: 42px; height: 42px; }
+  .phase-jump .icon-bubble :global(.icon) { width: 22px; height: 22px; }
+</style>

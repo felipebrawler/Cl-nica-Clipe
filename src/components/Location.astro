@@ -1,0 +1,45 @@
+---
+import Icon from "./Icon.astro";
+import { site, wa, fullAddress, mapsUrl, wazeUrl } from "../data/site";
+const embed = `https://maps.google.com/maps?q=${encodeURIComponent(fullAddress)}&z=16&output=embed`;
+---
+<section class="section location" id="localizacao">
+  <div class="wrap loc-grid">
+    <div class="loc-info">
+      <p class="eyebrow reveal">Como chegar</p>
+      <h2 class="reveal" style="--d:1">No centro de Pontes e Lacerda, <em>ao lado do Hospital São Lucas.</em></h2>
+      <ul class="loc-list reveal" style="--d:2">
+        <li><Icon name="pin" /><span><b>{site.address.street} · {site.address.district}</b>{site.address.city} - {site.address.state} · {site.address.reference}</span></li>
+        <li><Icon name="whatsapp" /><span><b>{site.phoneDisplay}</b>WhatsApp e telefone para agendamentos</span></li>
+        <li><Icon name="clock" /><span>
+          {site.hours ? site.hours.map((h) => <><b>{h.days}</b>{h.time}<br /></>) : <><b>Horários de atendimento</b>Consulte pelo WhatsApp</>}
+        </span></li>
+        <li><Icon name="instagram" /><span><b>@{site.instagram}</b>Novidades e dicas no Instagram</span></li>
+      </ul>
+      <div class="loc-actions reveal" style="--d:3">
+        <a class="btn" href={wa()} target="_blank" rel="noopener"><Icon name="whatsapp" /> Agendar</a>
+        <a class="btn btn-ghost" href={mapsUrl} target="_blank" rel="noopener"><Icon name="route" /> Google Maps</a>
+        <a class="btn btn-ghost" href={wazeUrl} target="_blank" rel="noopener">Waze</a>
+      </div>
+    </div>
+    <div class="map reveal-img">
+      <iframe title="Mapa: Clínica Clipe" src={embed} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div class="map-pin" aria-hidden="true"><span>Clipe</span></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .loc-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+  .loc-list { list-style: none; padding: 0; margin: 30px 0; display: grid; gap: 18px; }
+  .loc-list li { display: flex; gap: 16px; align-items: flex-start; }
+  .loc-list :global(.icon) { width: 24px; height: 24px; color: var(--gold); flex: none; margin-top: 2px; }
+  .loc-list b { display: block; font-size: 17px; }
+  .loc-list span { color: var(--brown-2); font-size: 15px; line-height: 1.5; }
+  .loc-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .map { position: relative; border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 1 / 0.9; box-shadow: var(--shadow-lg); background: var(--sand); }
+  .map iframe { width: 100%; height: 100%; border: 0; filter: sepia(.25) saturate(.9) hue-rotate(-8deg); }
+  .map-pin { position: absolute; top: 18px; left: 18px; background: #fff; border-radius: 999px; padding: 8px 14px 8px 10px; font-weight: 800; font-size: 14px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 8px; }
+  .map-pin::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--lilac-deep); box-shadow: 0 0 0 5px rgba(110,95,166,.2); }
+  @media (max-width: 900px) { .loc-grid { grid-template-columns: 1fr; } }
+</style>

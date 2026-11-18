@@ -1,0 +1,119 @@
+---
+import { Image, getImage } from "astro:assets";
+import Icon from "./Icon.astro";
+import fachada from "../assets/fachada.jpg";
+import recepcao from "../assets/recepcao.jpg";
+import store from "../assets/vacinas-store.jpg";
+import consultorio from "../assets/consultorio.jpg";
+
+// TODO: substituir as imagens de projeto (fachada, Vacinas Store) por fotos reais quando prontas.
+const stops = [
+  { img: fachada, title: "A fachada", text: "Projeto da nova fachada — Pediatria e Especialidades.", tag: "Projeto", pos: "center" },
+  { img: recepcao, title: "A recepção", text: "Madeira, luz quente e poltronas confortáveis para a família.", tag: "", pos: "center" },
+  { img: store, title: "Clipe Vacinas Store", text: "O espaço de vacinas, dentro da clínica.", tag: "Projeto", pos: "center" },
+  { img: consultorio, title: "Os consultórios", text: "Ambientes acolhedores para cada atendimento.", tag: "", pos: "center 30%" },
+];
+const full = await Promise.all(stops.map((s) => getImage({ src: s.img, width: 1800, format: "webp" })));
+---
+<div class="tour" data-tour>
+  <div class="bento">
+    {stops.map((s, i) => (
+      <button type="button" class={`tile t${i}`} data-index={i} aria-label={`Ampliar: ${s.title}`}>
+        <Image src={s.img} alt={s.text} widths={[420, 720, 1100]} sizes="(max-width: 760px) 92vw, 50vw" style={`object-position:${s.pos}`} />
+        <span class="cap">
+          {s.tag && <span class="ptag">{s.tag}</span>}
+          <b>{s.title}</b>
+          <span class="exp"><Icon name="expand" /></span>
+        </span>
+      </button>
+    ))}
+  </div>
+
+  <dialog class="lightbox" aria-label="Tour pela clínica">
+    <div class="lb-stage" data-stage>
+      {stops.map((s, i) => (
+        <figure class="lb-slide" data-slide={i}>
+          <img src={full[i].src} alt={s.text} loading="lazy" decoding="async" />
+          <figcaption><b>{s.title}</b> {s.text} {s.tag && <em>({s.tag.toLowerCase()})</em>}</figcaption>
+        </figure>
+      ))}
+    </div>
+    <button class="lb-btn prev" type="button" data-prev aria-label="Anterior"><Icon name="left" /></button>
+    <button class="lb-btn next" type="button" data-next aria-label="Próxima"><Icon name="right" /></button>
+    <button class="dialog-close" type="button" data-close aria-label="Fechar"><Icon name="close" /></button>
+    <div class="lb-dots" data-dots>{stops.map((_, i) => <span data-dot={i}></span>)}</div>
+  </dialog>
+</div>
+
+<style>
+  .bento { display: grid; grid-template-columns: 1.4fr 1fr 1fr; grid-template-rows: 260px 260px; gap: 18px; }
+  .tile { position: relative; border: 0; padding: 0; border-radius: var(--r); overflow: hidden; cursor: zoom-in; background: var(--sand); }
+  .t0 { grid-row: span 2; }
+  .t1 { grid-column: span 2; }
+  .tile :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease); }
+  .tile:hover :global(img) { transform: scale(1.06); }
+  .cap { position: absolute; inset: auto 0 0 0; padding: 50px 22px 18px; display: flex; align-items: center; gap: 10px; color: #fff; background: linear-gradient(transparent, rgba(40, 28, 20, .72)); text-align: left; }
+  .cap b { font: 560 21px/1.2 var(--serif); flex: 1; }
+  .ptag { font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; background: rgba(255,255,255,.22); backdrop-filter: blur(4px); }
+  .exp { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.2); backdrop-filter: blur(6px); transform: scale(.7); opacity: 0; transition: all .5s var(--ease); }
+  .exp :global(.icon) { width: 18px; }
+  .tile:hover .exp, .tile:focus-visible .exp { transform: none; opacity: 1; }
+
+  .lightbox { max-width: 100vw; max-height: 100dvh; width: 100vw; height: 100dvh; margin: 0; background: rgba(28, 20, 15, .96); }
+  .lightbox::backdrop { background: rgba(0,0,0,.6); }
+  .lb-stage { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .lb-stage::-webkit-scrollbar { display: none; }
+  .lb-slide { flex: 0 0 100%; margin: 0; scroll-snap-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 70px 70px 90px; gap: 18px; }
+  .lb-slide img { max-height: calc(100dvh - 190px); width: auto; max-width: 100%; border-radius: var(--r); object-fit: contain; box-shadow: 0 40px 80px -30px #000; }
+  .lb-slide figcaption { color: #e9dccb; font-size: 15px; text-align: center; }
+  .lb-slide b { font-family: var(--serif); font-size: 20px; color: #fff; margin-right: 8px; }
+  .lb-btn { position: absolute; top: 50%; translate: 0 -50%; width: 54px; height: 54px; border-radius: 50%; border: 0; background: rgba(255,255,255,.12); color: #fff; cursor: pointer; display: grid; place-items: center; transition: background .3s; }
+  .lb-btn:hover { background: rgba(255,255,255,.25); }
+  .prev { left: 18px; } .next { right: 18px; }
+  .lb-dots { position: absolute; bottom: 30px; left: 50%; translate: -50% 0; display: flex; gap: 8px; }
+  .lb-dots span { width: 8px; height: 8px; border-radius: 99px; background: rgba(255,255,255,.3); transition: all .4s var(--ease); }
+  .lb-dots span.on { width: 26px; background: var(--gold); }
+  @media (max-width: 760px) {
+    .bento { grid-template-columns: 1fr 1fr; grid-template-rows: 300px 180px 180px; }
+    .t0 { grid-row: auto; grid-column: span 2; }
+    .t1 { grid-column: span 2; }
+    .t2 .cap b, .t3 .cap b { font-size: 16px; }
+    .t2 .ptag, .t3 .ptag, .exp { display: none; }
+    .cap { padding: 40px 14px 12px; }
+    .lb-slide { padding: 70px 14px 90px; }
+    .lb-btn { display: none; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-tour]").forEach((root) => {
+    const dlg = root.querySelector<HTMLDialogElement>("dialog")!;
+    const stage = root.querySelector<HTMLElement>("[data-stage]")!;
+    const slides = [...root.querySelectorAll<HTMLElement>("[data-slide]")];
+    const dots = [...root.querySelectorAll<HTMLElement>("[data-dot]")];
+    let cur = 0;
+    const show = (i: number, smooth = true) => {
+      cur = (i + slides.length) % slides.length;
+      stage.scrollTo({ left: stage.clientWidth * cur, behavior: smooth ? "smooth" : "instant" as ScrollBehavior });
+      dots.forEach((d, j) => d.classList.toggle("on", j === cur));
+    };
+    root.querySelectorAll<HTMLButtonElement>("[data-index]").forEach((b) =>
+      b.addEventListener("click", () => { dlg.showModal(); requestAnimationFrame(() => show(Number(b.dataset.index), false)); })
+    );
+    root.querySelector("[data-prev]")!.addEventListener("click", () => show(cur - 1));
+    root.querySelector("[data-next]")!.addEventListener("click", () => show(cur + 1));
+    root.querySelector("[data-close]")!.addEventListener("click", () => dlg.close());
+    dlg.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") show(cur + 1);
+      if (e.key === "ArrowLeft") show(cur - 1);
+    });
+    let t: number;
+    stage.addEventListener("scroll", () => {
+      clearTimeout(t);
+      t = window.setTimeout(() => {
+        cur = Math.round(stage.scrollLeft / stage.clientWidth);
+        dots.forEach((d, j) => d.classList.toggle("on", j === cur));
+      }, 80);
+    }, { passive: true });
+  });
+</script>

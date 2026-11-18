@@ -1,0 +1,17 @@
+---
+interface Props { eyebrow: string; title: string; lead?: string; crumbs?: { href: string; label: string }[] }
+const { eyebrow, title, lead, crumbs = [] } = Astro.props;
+const html = title.replace(/\*(.+?)\*/g, "<em>$1</em>");
+---
+<section class="page-hero glow-area slats">
+  <div class="wrap">
+    <nav class="crumbs reveal" aria-label="Você está em">
+      <a href="/">Início</a>
+      {crumbs.map((c) => <><span aria-hidden="true">/</span><a href={c.href}>{c.label}</a></>)}
+    </nav>
+    <p class="eyebrow reveal" style="--d:1">{eyebrow}</p>
+    <h1 class="reveal" style="--d:2" set:html={html} />
+    {lead && <p class="lead reveal" style="--d:3">{lead}</p>}
+    <slot />
+  </div>
+</section>

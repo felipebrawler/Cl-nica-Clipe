@@ -20,9 +20,9 @@ export const C = {
 export function faces({ green = C.green, blue = C.blue, pink = C.pink } = {}) {
   const sw = 5;
   return `
-  <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="${sw}">
+  <g class="faces" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="${sw}">
     <!-- verde: cachinho + boca "o" -->
-    <g stroke="${green}">
+    <g class="face face-1" stroke="${green}">
       <circle cx="30" cy="62" r="27"/>
       <path d="M30 35 C29 23 41 20 42 28 C43 34 35 35 35 29"/>
       <circle cx="20" cy="57" r="1.6" stroke-width="4.4"/>
@@ -30,7 +30,7 @@ export function faces({ green = C.green, blue = C.blue, pink = C.pink } = {}) {
       <circle cx="30" cy="75" r="5.5" stroke-width="4"/>
     </g>
     <!-- azul: topetinho + piscadinha -->
-    <g stroke="${blue}">
+    <g class="face face-2" stroke="${blue}">
       <circle cx="90" cy="62" r="27"/>
       <path d="M80 36 L82 25 L87 33 L91 21 L95 33 L101 26 L100 37"/>
       <path d="M76 53 L83 57 L76 61" stroke-width="4"/>
@@ -38,7 +38,7 @@ export function faces({ green = C.green, blue = C.blue, pink = C.pink } = {}) {
       <path d="M77 69 Q90 83 103 69"/>
     </g>
     <!-- rosa: lacinho + sorrisão -->
-    <g stroke="${pink}">
+    <g class="face face-3" stroke="${pink}">
       <circle cx="150" cy="62" r="27"/>
       <path d="M152 33 L139 23 L140 40 Z M152 33 L166 22 L165 40 Z" fill="${pink}" stroke-width="3"/>
       <circle cx="140" cy="57" r="1.6" stroke-width="4.4"/>
@@ -75,7 +75,7 @@ export function wordmark({ fill = C.lilac, inline = C.white, id = "w" } = {}) {
       <feDisplacementMap in="SourceGraphic" scale="3.2"/>
     </filter>
   </defs>
-  <g filter="url(#${id}-rough)">
+  <g class="wordmark" filter="url(#${id}-rough)">
     <g fill="none" stroke="${fill}" stroke-width="30" stroke-linejoin="miter" stroke-linecap="square">${thick}</g>
     <g fill="none" stroke="${inline}" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="70 9 30 7">${thin}</g>
   </g>`;
