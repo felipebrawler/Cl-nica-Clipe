@@ -137,6 +137,7 @@ export const team: Professional[] = [
     registration: undefined, // TODO: COREN
     bio: "Responsável pela sala de injetáveis, com aplicação segura e humanizada e atendimento com qualidade e carinho em todas as fases da vida.",
     focus: ["Aplicação de injetáveis", "Soroterapia (mediante prescrição)", "Vacinas"],
+    photo: "jucelia.jpg",
   },
 ];
 
