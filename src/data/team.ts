@@ -78,6 +78,7 @@ export const team: Professional[] = [
     focus: ["Neurodesenvolvimento", "Neuropediatria", "Psiquiatria infantil"],
     // TODO: confirmar se faz parte da equipe fixa ou atende em datas específicas
     note: "Atendimento em datas específicas — consulte a próxima agenda.",
+    photo: "graziela.jpg",
   },
   {
     id: "laura-maria",
