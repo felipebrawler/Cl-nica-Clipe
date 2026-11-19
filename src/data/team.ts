@@ -65,6 +65,7 @@ export const team: Professional[] = [
     registration: "CRM-MT 8664",
     bio: "Atendimento em clínica médica e cardiologia para adultos, com foco na prevenção e no acompanhamento da saúde do coração.",
     focus: ["Consulta cardiológica", "Clínica médica", "Prevenção cardiovascular"],
+    photo: "joao-renato.jpg",
   },
   {
     id: "graziela",
