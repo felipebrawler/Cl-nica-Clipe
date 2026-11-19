@@ -36,6 +36,7 @@ export const team: Professional[] = [
       "Sala de parto de baixo e alto risco",
       "Testes do recém-nascido",
     ],
+    photo: "ana-cristina.jpg",
   },
   {
     id: "ualas",
@@ -53,6 +54,7 @@ export const team: Professional[] = [
       "Retirada da vesícula",
       "Pequenas cirurgias em geral",
     ],
+    photo: "ualas.jpg",
   },
   {
     id: "joao-renato",
@@ -91,7 +93,7 @@ export const team: Professional[] = [
       "Orientação parental",
       "Atendimento presencial e online",
     ],
-    photo: "laura-maria.png",
+    photo: "laura-maria.jpg",
     instagram: "lauramaria.psi",
   },
   {
@@ -123,6 +125,7 @@ export const team: Professional[] = [
       "Seletividade alimentar",
       "Obesidade infantil",
     ],
+    photo: "neliane.jpg",
   },
   {
     id: "jucelia",
