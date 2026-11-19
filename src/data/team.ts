@@ -110,6 +110,7 @@ export const team: Professional[] = [
       "Postura e equilíbrio",
       "Estimulação cognitiva",
     ],
+    photo: "mariana-garcia.jpg",
   },
   {
     id: "neliane",
