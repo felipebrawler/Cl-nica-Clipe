@@ -166,3 +166,87 @@ export const vaccineCalendar: VaccineAge[] = [
     ],
   },
 ];
+
+// ---------------------------------------------------------------------------
+// Vacinas e imunobiológicos disponíveis na Clipe Vacinas Store
+// (lista enviada pela clínica — "o esquema pode variar").
+// ---------------------------------------------------------------------------
+export interface StoreItem {
+  name: string;
+  note?: string;
+}
+export interface StoreGroup {
+  title: string;
+  icon: "baby" | "growth" | "heart" | "family" | "syringe";
+  accent: string;
+  items: StoreItem[];
+}
+
+export const storeGroups: StoreGroup[] = [
+  {
+    title: "Bebês e crianças",
+    icon: "baby",
+    accent: "var(--blue)",
+    items: [
+      { name: "Hexavalente", note: "2, 4 e 6 meses" },
+      { name: "Pentavalente" },
+      { name: "Rotavírus", note: "2, 4 e 6 meses" },
+      { name: "Pneumocócica 15-valente", note: "2, 4 e 6 meses" },
+      { name: "Pneumocócica 20-valente" },
+      { name: "Meningocócica B", note: "3, 5 e 12 meses · menores de 2 anos: 3 doses · a partir de 2 anos: 2 doses" },
+      { name: "Meningocócica ACWY", note: "3, 5 e 12 meses" },
+      { name: "Beyfortus (nirsevimabe)", note: "prevenção da bronquiolite (VSR)" },
+    ],
+  },
+  {
+    title: "Para todas as idades",
+    icon: "growth",
+    accent: "var(--green)",
+    items: [
+      { name: "Hepatite A", note: "2 doses" },
+      { name: "Hepatite B" },
+      { name: "Febre amarela" },
+      { name: "Varicela (catapora)" },
+      { name: "Tríplice viral (sarampo, caxumba e rubéola)" },
+      { name: "dTpa (difteria, tétano e coqueluche)" },
+      { name: "HPV" },
+      { name: "Influenza (gripe)" },
+      { name: "Qdenga (dengue)", note: "a partir de 4 anos · 2 doses" },
+    ],
+  },
+  {
+    title: "Gestantes",
+    icon: "heart",
+    accent: "var(--pink)",
+    items: [
+      { name: "Abrysvo", note: "vírus sincicial respiratório (VSR) na gestação" },
+      { name: "Imunoglobulina anti-Rh (Rhophylac)", note: "mediante prescrição" },
+    ],
+  },
+  {
+    title: "Adultos e 60+",
+    icon: "family",
+    accent: "var(--lilac)",
+    items: [
+      { name: "Herpes-zóster" },
+      { name: "Arexvy", note: "vírus sincicial respiratório (VSR) para idosos" },
+    ],
+  },
+  {
+    title: "Outras aplicações",
+    icon: "syringe",
+    accent: "var(--gold)",
+    items: [{ name: "Lectrum", note: "tratamento indicado pelo médico (crescimento) · mediante prescrição" }],
+  },
+];
+
+/** Indica se um item do calendário está na lista da Clipe Vacinas Store. */
+const storeKeywords = [
+  "hexavalente", "pentavalente", "rotavírus", "pneumocócica", "meningocócica b", "meningocócica acwy",
+  "hepatite a", "hepatite b", "febre amarela", "varicela", "tríplice viral", "dtpa", "hpv",
+  "herpes", "influenza", "dengue", "sincicial",
+];
+export const inStore = (name: string) => {
+  const n = name.toLowerCase();
+  return storeKeywords.some((k) => n.includes(k));
+};

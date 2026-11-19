@@ -1,6 +1,6 @@
 ---
 import Icon from "./Icon.astro";
-import { vaccineCalendar } from "../data/vaccines";
+import { vaccineCalendar, inStore } from "../data/vaccines";
 import { wa } from "../data/site";
 const first = vaccineCalendar.find((a) => a.id === "2m")!;
 ---
@@ -32,7 +32,7 @@ const first = vaccineCalendar.find((a) => a.id === "2m")!;
           {a.items.map((v, i) => (
             <li style={`--i:${i}`} class:list={{ extra: v.extra }}>
               <span class="vi"><Icon name="syringe" /></span>
-              <span class="vn"><b>{v.name}</b>{v.dose && <small>{v.dose}</small>}</span>
+              <span class="vn"><b>{v.name}</b>{v.dose && <small>{v.dose}</small>}{inStore(v.name) && <em class="clipe">✓ Na Clipe Vacinas Store</em>}</span>
               <span class="tag">{v.extra ? "Complementar" : "Calendário básico"}</span>
             </li>
           ))}
@@ -44,7 +44,7 @@ const first = vaccineCalendar.find((a) => a.id === "2m")!;
     ))}
   </div>
 </div>
-<p class="vc-note"><Icon name="info" /> Resumo baseado no Programa Nacional de Imunizações e nas recomendações das sociedades médicas (SBP/SBIm). Vacinas “complementares” são as disponíveis na rede privada. Esquemas podem variar conforme histórico e indicação — confirme sempre com a nossa equipe.</p>
+<p class="vc-note"><Icon name="info" /> Resumo baseado no Programa Nacional de Imunizações e nas recomendações das sociedades médicas (SBP/SBIm). Vacinas “complementares” são as disponíveis na rede privada. O selo “Na Clipe Vacinas Store” indica as vacinas que temos na clínica. O esquema pode variar conforme idade, histórico e indicação — confirme sempre com a nossa equipe.</p>
 
 <style>
   .vc { display: grid; grid-template-columns: 260px 1fr; gap: 28px; align-items: start; }
@@ -66,6 +66,7 @@ const first = vaccineCalendar.find((a) => a.id === "2m")!;
   .extra .vi { background: #f7ecd9; color: #8a6a35; }
   .vn b { display: block; font-size: 16px; line-height: 1.3; }
   .vn small { color: var(--brown-3); font-size: 13.5px; }
+  .vn .clipe { display: block; font-style: normal; font-size: 12px; font-weight: 800; color: var(--lilac-deep); margin-top: 2px; }
   .tag { font-size: 11.5px; font-weight: 800; padding: 5px 10px; border-radius: 999px; background: var(--cream); color: var(--brown-3); white-space: nowrap; }
   .extra .tag { background: #f7ecd9; color: #8a6a35; }
   .vc-note { display: flex; gap: 10px; font-size: 13.5px; color: var(--brown-3); margin: 26px 0 0; max-width: 900px; }
