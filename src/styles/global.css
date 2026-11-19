@@ -246,7 +246,28 @@ dialog[open] { animation: pop .6s var(--ease); }
 @keyframes tag-on { from { opacity: 0; transform: translateY(6px); } }
 @keyframes face-wink { 30% { transform: rotate(-14deg) translateY(-3px); } 60% { transform: rotate(8deg); } }
 
-/* Foto real no card */
-.portrait.has-photo .photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 25%; transition: transform 1.2s var(--ease); }
+/* Foto real no card — tratamento unificado com a paleta */
+.portrait.has-photo { background: linear-gradient(160deg, var(--lilac-soft), #f3e6d6); isolation: isolate; }
+.portrait.has-photo .photo {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 25%;
+  /* gradação suave: tons um pouco mais quentes e menos saturados, para as fotos conversarem entre si */
+  filter: saturate(.72) contrast(1.05) brightness(1.04) sepia(.2);
+  transition: transform 1.2s var(--ease), filter .8s var(--ease);
+}
+/* véu de cor: lilás no topo, dourado no meio e cacau na base */
+.portrait.has-photo::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(165deg, rgba(154, 143, 200, .85) 0%, rgba(194, 160, 106, .35) 50%, rgba(94, 70, 54, .7) 100%);
+  mix-blend-mode: soft-light;
+  transition: opacity .8s var(--ease);
+}
+/* leve vinheta na base para uniformizar fundos diferentes */
+.portrait.has-photo::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(180deg, rgba(154, 143, 200, .12) 0%, transparent 35%, transparent 60%, rgba(74, 54, 40, .38) 100%), radial-gradient(120% 90% at 50% 30%, transparent 55%, rgba(110, 95, 166, .22) 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .5), inset 0 0 0 7px rgba(194, 160, 106, .0);
+  border-radius: inherit;
+}
 .portrait.has-photo .faces-mini { display: none; }
-.member:hover .portrait.has-photo .photo { transform: scale(1.05); }
+.member:hover .portrait.has-photo .photo { transform: scale(1.05); filter: saturate(.95) contrast(1.04) brightness(1.04) sepia(.05); }
+.member:hover .portrait.has-photo::before { opacity: .55; }
