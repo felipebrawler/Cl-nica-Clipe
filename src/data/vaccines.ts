@@ -1,12 +1,12 @@
-// Calendário de vacinação resumido, baseado nas recomendações do PNI (Ministério da Saúde)
-// e nas vacinas complementares indicadas por SBP/SBIm.
-// TODO: conteúdo a ser revisado pela responsável técnica antes da publicação,
-// e confirmar quais vacinas estão disponíveis na Clipe Vacinas Store.
+// Calendário de vacinação resumido conforme os Calendários SBIm 2026/2027
+// (Sociedade Brasileira de Imunizações — https://sbim.org.br/calendario-de-vacinacao).
+// "extra: true" = vacina não oferecida gratuitamente no SUS/PNI para aquela faixa (rede privada).
+// O esquema pode variar conforme idade, histórico vacinal e indicação médica.
 
 export interface VaccineItem {
   name: string;
   dose?: string;
-  extra?: boolean; // complementar (rede privada)
+  extra?: boolean; // somente na rede privada
 }
 
 export interface VaccineAge {
@@ -16,17 +16,22 @@ export interface VaccineAge {
   items: VaccineItem[];
 }
 
+export const calendarSource = {
+  name: "Calendários de vacinação SBIm 2026/2027",
+  url: "https://sbim.org.br/calendario-de-vacinacao",
+};
+
 export const vaccineCalendar: VaccineAge[] = [
   {
     id: "gestante",
     label: "Gestantes",
     group: "Gestação",
     items: [
-      { name: "dTpa (tríplice bacteriana acelular)", dose: "a partir da 20ª semana" },
-      { name: "Hepatite B", dose: "conforme situação vacinal" },
-      { name: "Influenza (gripe)", dose: "dose anual" },
-      { name: "Covid-19", dose: "conforme recomendação vigente" },
-      { name: "Vírus Sincicial Respiratório (VSR)", dose: "conforme indicação" },
+      { name: "dTpa (difteria, tétano e coqueluche)", dose: "uma dose a cada gestação, a partir da 20ª semana" },
+      { name: "Vírus sincicial respiratório – VSR (Abrysvo®)", dose: "uma dose a partir da 28ª semana" },
+      { name: "Influenza (gripe)", dose: "dose anual, em qualquer fase da gestação" },
+      { name: "Hepatite B", dose: "três doses (0-1-6 meses), se não vacinada" },
+      { name: "Covid-19", dose: "uma dose a cada gestação" },
     ],
   },
   {
@@ -34,8 +39,9 @@ export const vaccineCalendar: VaccineAge[] = [
     label: "Ao nascer",
     group: "Bebê",
     items: [
-      { name: "BCG", dose: "dose única" },
-      { name: "Hepatite B", dose: "1ª dose" },
+      { name: "BCG", dose: "dose única, o mais cedo possível" },
+      { name: "Hepatite B", dose: "1ª dose (esquema de 3 ou 4 doses, conforme a vacina)" },
+      { name: "Anticorpo contra o VSR – nirsevimabe (Beyfortus®)", dose: "bebês menores de 12 meses; no SUS, para grupos de maior risco" },
     ],
   },
   {
@@ -43,11 +49,9 @@ export const vaccineCalendar: VaccineAge[] = [
     label: "2 meses",
     group: "Bebê",
     items: [
-      { name: "Pentavalente (DTP + Hib + Hepatite B)", dose: "1ª dose" },
-      { name: "Poliomielite inativada (VIP)", dose: "1ª dose" },
-      { name: "Pneumocócica", dose: "1ª dose" },
-      { name: "Rotavírus", dose: "1ª dose" },
-      { name: "Hexavalente acelular", dose: "alternativa à penta + VIP", extra: true },
+      { name: "Hexavalente ou pentavalente (DTP + Hib + poliomielite + hepatite B)", dose: "1ª dose · a hexavalente acelular é da rede privada" },
+      { name: "Pneumocócica conjugada (VPC15 ou VPC20)", dose: "1ª dose" },
+      { name: "Rotavírus", dose: "1ª dose (2 ou 3 doses, conforme a vacina)" },
     ],
   },
   {
@@ -55,9 +59,8 @@ export const vaccineCalendar: VaccineAge[] = [
     label: "3 meses",
     group: "Bebê",
     items: [
-      { name: "Meningocócica C", dose: "1ª dose" },
+      { name: "Meningocócica ACWY ou C", dose: "1ª dose" },
       { name: "Meningocócica B", dose: "1ª dose", extra: true },
-      { name: "Meningocócica ACWY", dose: "1ª dose", extra: true },
     ],
   },
   {
@@ -65,9 +68,8 @@ export const vaccineCalendar: VaccineAge[] = [
     label: "4 meses",
     group: "Bebê",
     items: [
-      { name: "Pentavalente", dose: "2ª dose" },
-      { name: "Poliomielite inativada (VIP)", dose: "2ª dose" },
-      { name: "Pneumocócica", dose: "2ª dose" },
+      { name: "Hexavalente ou pentavalente (DTP + Hib + poliomielite + hepatite B)", dose: "2ª dose" },
+      { name: "Pneumocócica conjugada (VPC15 ou VPC20)", dose: "2ª dose" },
       { name: "Rotavírus", dose: "2ª dose" },
     ],
   },
@@ -76,9 +78,8 @@ export const vaccineCalendar: VaccineAge[] = [
     label: "5 meses",
     group: "Bebê",
     items: [
-      { name: "Meningocócica C", dose: "2ª dose" },
+      { name: "Meningocócica ACWY ou C", dose: "2ª dose" },
       { name: "Meningocócica B", dose: "2ª dose", extra: true },
-      { name: "Meningocócica ACWY", dose: "2ª dose", extra: true },
     ],
   },
   {
@@ -86,10 +87,11 @@ export const vaccineCalendar: VaccineAge[] = [
     label: "6 meses",
     group: "Bebê",
     items: [
-      { name: "Pentavalente", dose: "3ª dose" },
-      { name: "Poliomielite inativada (VIP)", dose: "3ª dose" },
-      { name: "Influenza (gripe)", dose: "anual, a partir dos 6 meses" },
-      { name: "Covid-19", dose: "conforme recomendação vigente" },
+      { name: "Hexavalente ou pentavalente (DTP + Hib + poliomielite + hepatite B)", dose: "3ª dose" },
+      { name: "Pneumocócica conjugada (VPC15 ou VPC20)", dose: "3ª dose, conforme a vacina utilizada" },
+      { name: "Rotavírus", dose: "3ª dose, se a vacina pentavalente" },
+      { name: "Influenza (gripe)", dose: "a partir de 6 meses · na 1ª vez, duas doses com 1 mês de intervalo" },
+      { name: "Covid-19", dose: "de 6 meses a menores de 5 anos, conforme a vacina" },
     ],
   },
   {
@@ -103,10 +105,12 @@ export const vaccineCalendar: VaccineAge[] = [
     label: "12 meses",
     group: "Criança",
     items: [
-      { name: "Tríplice viral (sarampo, caxumba, rubéola)", dose: "1ª dose" },
-      { name: "Pneumocócica", dose: "reforço" },
-      { name: "Meningocócica", dose: "reforço" },
+      { name: "Pneumocócica conjugada (VPC15 ou VPC20)", dose: "reforço" },
+      { name: "Meningocócica ACWY ou C", dose: "reforço" },
       { name: "Meningocócica B", dose: "reforço", extra: true },
+      { name: "Tríplice viral (sarampo, caxumba e rubéola)", dose: "1ª dose" },
+      { name: "Varicela (catapora)", dose: "1ª dose" },
+      { name: "Hepatite A", dose: "1ª dose" },
     ],
   },
   {
@@ -114,43 +118,66 @@ export const vaccineCalendar: VaccineAge[] = [
     label: "15 meses",
     group: "Criança",
     items: [
-      { name: "DTP (tríplice bacteriana)", dose: "1º reforço" },
-      { name: "Poliomielite", dose: "reforço" },
-      { name: "Hepatite A", dose: "dose única" },
-      { name: "Tetra viral (tríplice viral + varicela)", dose: "dose única" },
+      { name: "Tríplice bacteriana (DTP) + Hib + poliomielite inativada", dose: "1º reforço (15 a 18 meses)" },
+      { name: "Tríplice viral (sarampo, caxumba e rubéola)", dose: "2ª dose (15 a 24 meses)" },
+      { name: "Varicela (catapora)", dose: "2ª dose (15 a 24 meses)" },
     ],
   },
   {
+    id: "18m",
+    label: "18 meses",
+    group: "Criança",
+    items: [{ name: "Hepatite A", dose: "2ª dose" }],
+  },
+  {
     id: "4a",
-    label: "4 anos",
+    label: "4 a 6 anos",
     group: "Criança",
     items: [
-      { name: "DTP (tríplice bacteriana)", dose: "2º reforço" },
-      { name: "Febre amarela", dose: "reforço" },
-      { name: "Varicela", dose: "2ª dose" },
+      { name: "Tríplice bacteriana (DTPa) + poliomielite inativada", dose: "2º reforço" },
+      { name: "Febre amarela", dose: "2ª dose aos 4 anos" },
+      { name: "Meningocócica ACWY ou C", dose: "reforço entre 5 e 6 anos" },
+      { name: "Dengue (Qdenga®)", dose: "a partir de 4 anos · duas doses, independente de contato prévio com o vírus" },
     ],
   },
   {
     id: "9a",
-    label: "9 a 14 anos",
+    label: "9 anos",
+    group: "Criança",
+    items: [
+      { name: "HPV", dose: "duas doses (9 a 14 anos)" },
+      { name: "dTpa (difteria, tétano e coqueluche)", dose: "reforço", extra: true },
+      { name: "Dengue (Qdenga®)", dose: "duas doses, se ainda não vacinado · no SUS, de 10 a 14 anos" },
+    ],
+  },
+  {
+    id: "adolescente",
+    label: "10 a 19 anos",
     group: "Adolescente",
     items: [
-      { name: "HPV", dose: "conforme esquema vigente" },
-      { name: "Meningocócica ACWY", dose: "11 a 14 anos" },
-      { name: "Dengue", dose: "conforme faixa etária e indicação", extra: true },
+      { name: "HPV", dose: "duas doses até 14 anos; não vacinados até 19 anos também podem receber" },
+      { name: "Meningocócica ACWY", dose: "reforço aos 11 anos ou 5 anos após a última dose" },
+      { name: "Meningocócica B", dose: "duas doses, se não vacinado", extra: true },
+      { name: "dTpa (difteria, tétano e coqueluche)", dose: "reforço 10 anos após a última dose" },
+      { name: "Influenza (gripe)", dose: "dose anual" },
+      { name: "Dengue (Qdenga®)", dose: "duas doses, se não vacinado" },
+      { name: "Tríplice viral, varicela, hepatites A e B e febre amarela", dose: "para quem não completou o esquema na infância" },
     ],
   },
   {
     id: "adulto",
-    label: "Adultos",
+    label: "20 a 59 anos",
     group: "Adulto",
     items: [
-      { name: "dT (difteria e tétano)", dose: "reforço a cada 10 anos" },
-      { name: "Hepatite B", dose: "3 doses, se não vacinado" },
-      { name: "Tríplice viral", dose: "conforme idade e histórico" },
-      { name: "Febre amarela", dose: "conforme histórico" },
+      { name: "dTpa (difteria, tétano e coqueluche)", dose: "reforço a cada 10 anos · no SUS, dT" },
       { name: "Influenza (gripe)", dose: "dose anual" },
-      { name: "HPV", dose: "conforme indicação", extra: true },
+      { name: "Hepatite B", dose: "três doses, se não vacinado" },
+      { name: "Tríplice viral (sarampo, caxumba e rubéola)", dose: "duas doses após 1 ano de idade, se não vacinado" },
+      { name: "Febre amarela", dose: "conforme histórico vacinal" },
+      { name: "Pneumocócica conjugada VPC20", dose: "rotina a partir dos 50 anos · dose única", extra: true },
+      { name: "Herpes-zóster (VZR)", dose: "a partir dos 50 anos · duas doses com intervalo de 2 meses", extra: true },
+      { name: "HPV", dose: "conforme indicação médica", extra: true },
+      { name: "Hepatite A, varicela e dengue (Qdenga®)", dose: "para suscetíveis, conforme indicação", extra: true },
     ],
   },
   {
@@ -158,11 +185,13 @@ export const vaccineCalendar: VaccineAge[] = [
     label: "60 anos ou mais",
     group: "Adulto",
     items: [
-      { name: "Influenza (gripe)", dose: "dose anual" },
+      { name: "Influenza (gripe)", dose: "dose anual, de preferência a vacina de alta concentração" },
+      { name: "Pneumocócica conjugada VPC20", dose: "dose única · no SUS, para grupos específicos" },
+      { name: "Herpes-zóster (VZR)", dose: "duas doses com intervalo de 2 meses", extra: true },
+      { name: "Vírus sincicial respiratório – VSR (Arexvy® ou Abrysvo®)", dose: "dose única · rotina a partir de 70 anos, ou 60+ com fatores de risco", extra: true },
+      { name: "dTpa (difteria, tétano e coqueluche)", dose: "reforço a cada 10 anos · no SUS, dT" },
+      { name: "Hepatite B", dose: "três doses, se não vacinado" },
       { name: "Covid-19", dose: "conforme recomendação vigente" },
-      { name: "Pneumocócica", dose: "conforme indicação" },
-      { name: "Herpes zóster", dose: "a partir dos 50 anos", extra: true },
-      { name: "Vírus Sincicial Respiratório (VSR)", dose: "conforme indicação", extra: true },
     ],
   },
 ];
@@ -244,7 +273,7 @@ export const storeGroups: StoreGroup[] = [
 const storeKeywords = [
   "hexavalente", "pentavalente", "rotavírus", "pneumocócica", "meningocócica b", "meningocócica acwy",
   "hepatite a", "hepatite b", "febre amarela", "varicela", "tríplice viral", "dtpa", "hpv",
-  "herpes", "influenza", "dengue", "sincicial",
+  "herpes", "influenza", "dengue", "sincicial", "nirsevimabe", "vsr",
 ];
 export const inStore = (name: string) => {
   const n = name.toLowerCase();

@@ -1,6 +1,6 @@
 ---
 import Icon from "./Icon.astro";
-import { vaccineCalendar, inStore } from "../data/vaccines";
+import { vaccineCalendar, inStore, calendarSource } from "../data/vaccines";
 import { wa } from "../data/site";
 const first = vaccineCalendar.find((a) => a.id === "2m")!;
 ---
@@ -33,7 +33,7 @@ const first = vaccineCalendar.find((a) => a.id === "2m")!;
             <li style={`--i:${i}`} class:list={{ extra: v.extra }}>
               <span class="vi"><Icon name="syringe" /></span>
               <span class="vn"><b>{v.name}</b>{v.dose && <small>{v.dose}</small>}{inStore(v.name) && <em class="clipe">✓ Na Clipe Vacinas Store</em>}</span>
-              <span class="tag">{v.extra ? "Complementar" : "Calendário básico"}</span>
+              <span class="tag">{v.extra ? "Rede privada" : "SUS e rede privada"}</span>
             </li>
           ))}
         </ul>
@@ -44,7 +44,7 @@ const first = vaccineCalendar.find((a) => a.id === "2m")!;
     ))}
   </div>
 </div>
-<p class="vc-note"><Icon name="info" /> Resumo baseado no Programa Nacional de Imunizações e nas recomendações das sociedades médicas (SBP/SBIm). Vacinas “complementares” são as disponíveis na rede privada. O selo “Na Clipe Vacinas Store” indica as vacinas que temos na clínica. O esquema pode variar conforme idade, histórico e indicação — confirme sempre com a nossa equipe.</p>
+<p class="vc-note"><Icon name="info" /> <span>Baseado nos <a href={calendarSource.url} target="_blank" rel="noopener">{calendarSource.name}</a> (Sociedade Brasileira de Imunizações). “SUS e rede privada”: também oferecida gratuitamente pelo Programa Nacional de Imunizações, em geral para a faixa indicada. “Rede privada”: não disponível no SUS para essa faixa. O selo “Na Clipe Vacinas Store” indica as vacinas que temos na clínica. O esquema pode variar conforme idade, histórico vacinal e indicação médica — confirme sempre com a nossa equipe.</span></p>
 
 <style>
   .vc { display: grid; grid-template-columns: 260px 1fr; gap: 28px; align-items: start; }
@@ -71,6 +71,7 @@ const first = vaccineCalendar.find((a) => a.id === "2m")!;
   .extra .tag { background: #f7ecd9; color: #8a6a35; }
   .vc-note { display: flex; gap: 10px; font-size: 13.5px; color: var(--brown-3); margin: 26px 0 0; max-width: 900px; }
   .vc-note :global(.icon) { width: 18px; flex: none; margin-top: 3px; }
+  .vc-note a { color: var(--lilac-deep); font-weight: 700; }
   @media (max-width: 860px) {
     .vc { grid-template-columns: 1fr; }
     .vc-tabs { position: static; display: flex; overflow-x: auto; gap: 8px; padding: 4px 2px 12px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
